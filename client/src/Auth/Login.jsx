@@ -1,4 +1,5 @@
-import { useEffect, useState, useNavigate } from "react";
+import { useEffect, useState, } from "react";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -9,25 +10,7 @@ import { useEffect, useState, useNavigate } from "react";
 
 function Login(){
 
-    const navigate = useNavigate()
-    fetch("http://localhost:3000" ,{
-        method: "POST",
-        header:{
-            "Content-Type" : "application/json"
-        },
-        body: JSON.stringify({username,password})
-    })
-    .then(response => {
-        if(!response.ok){
-            throw new Error("Network response was not ok")
-        }
-        return response.text();
-    })
-    .then(data =>{
-        alert("Succesful Login")
-        navigate("/Home")
-    })
-    .catch(error => console.log("Error :",error))
+    //const navigate = useNavigate()
 
 
     const [username,setUsername] = useState("");
@@ -43,7 +26,24 @@ function Login(){
 
     function handleLogin(event){
         event.preventDefault();
-
+        fetch("http://localhost:3000/login" ,{
+            method: "POST",
+            header:{
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({username,password})
+        })
+        .then(response => {
+            if(!response.ok){
+                throw new Error("Network response was not ok")
+            }
+            return response.text();
+        })
+        .then(data =>{
+            alert("Succesful Login")
+            //navigate("/Home")
+        })
+        .catch(error => console.log("Error :",error))
     }
 
 
