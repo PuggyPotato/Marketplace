@@ -16,10 +16,10 @@ function Register(){
         event.preventDefault();
         fetch("http://localhost:3000/register",{
             method: "POST",
-            header:{
+            headers:{
                 "Content-Type" : "application/json"
             },
-            body: JSON.stringify({username:username,password:password})
+            body: JSON.stringify({username,password})
         })
         .then(response =>{
             if(!response.ok){
@@ -45,7 +45,7 @@ function Register(){
         <>
             <div>
                 <form onSubmit={handleRegister}>
-                    <h1>Login</h1>
+                    <h1>Register</h1>
                     <label>Username: <input value={username} onChange={(event) => setUsername(event.target.value)}/></label>
                     <label>Password: <input value={password} onChange={(event) => setPassword(event.target.value)}/></label>
                     <button type="button">Go To Login</button>

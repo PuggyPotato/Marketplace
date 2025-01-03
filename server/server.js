@@ -17,11 +17,12 @@ const UserCredentialSchema = new  mongoose.Schema({
     password:String
 })
 
-const UserCredential = new mongoose.model("UserCredential", UserCredentialSchema)
+const UserCredential = mongoose.model("UserCredential", UserCredentialSchema)
 
-
+//Register Handling
 app.post("/register",async (req,res) =>{
     const {username,password} = req.body;
+    console.log(req.body);
     const userCredential = new UserCredential({username,password});
 
     try{
@@ -33,6 +34,24 @@ app.post("/register",async (req,res) =>{
     }
 })
 
+app.post("/login", async (req,res) =>{
+    const {username,password} = req.body
+    console.log(req.body)
+    try{
+        const user = await UserCredential.findOne({username})
+        if(user && user.password === password){
+            res.status(200).send("Login Succesful")
+        }
+        else{
+            res.status(401).send("Login Failed")
+        }
+    }
+    catch(error){
+        res.status(500).send("Something Went Wrong")
+    }
+})
+
+//Just To Test if the code is running well
 app.listen(PORT, () =>{
     console.log("Port is running on " + PORT);
 

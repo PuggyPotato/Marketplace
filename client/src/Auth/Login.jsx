@@ -28,10 +28,10 @@ function Login(){
         event.preventDefault();
         fetch("http://localhost:3000/login" ,{
             method: "POST",
-            header:{
+            headers:{
                 "Content-Type" : "application/json"
             },
-            body: JSON.stringify({username,password})
+            body: JSON.stringify({username:username,password:password})
         })
         .then(response => {
             if(!response.ok){
