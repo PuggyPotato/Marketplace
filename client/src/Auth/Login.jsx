@@ -15,6 +15,7 @@ function Login(){
 
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
+    const LoginApi = import.meta.env.VITE_LoginApi
 
     function changeUsername(event){
         setUsername(event.target.value);
@@ -26,7 +27,7 @@ function Login(){
 
     function handleLogin(event){
         event.preventDefault();
-        fetch("http://localhost:3000/login" ,{
+        fetch(LoginApi,{
             method: "POST",
             headers:{
                 "Content-Type" : "application/json"

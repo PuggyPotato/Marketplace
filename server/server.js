@@ -3,8 +3,9 @@ const express = require("express");
 const app = express();
 const cors = require("cors")
 const mongoose = require("mongoose")
+const bcrypt = require("bcryptjs")
 
-const PORT = 3000 || process.env.PORT;
+const PORT = process.env.PORT;
 const MONGOURL = process.env.MONGOURL;
 
 app.use(cors())
@@ -21,17 +22,23 @@ const UserCredential = mongoose.model("UserCredential", UserCredentialSchema)
 
 //Register Handling
 app.post("/register",async (req,res) =>{
-    const {username,password} = req.body;
-    console.log(req.body);
-    const userCredential = new UserCredential({username,password});
+    let {username,password} = req.body;
 
-    try{
-        await userCredential.save()
-        res.status(200).send("Data Saved Succesfully");
-    }
-    catch(error){
-        console.log(error)
-    }
+            try{
+                const salt = await bcrypt.genSalt(10);
+                const hash = await bcrypt.hash(password,salt)
+
+                const userCredential = new UserCredential({username,password:hash});
+
+                await userCredential.save()
+                res.status(200).send("Data Saved Succesfully");
+            }
+            catch(error){
+                console.log(error)
+            }
+     
+     
+
 })
 
 app.post("/login", async (req,res) =>{
@@ -39,7 +46,9 @@ app.post("/login", async (req,res) =>{
     console.log(req.body)
     try{
         const user = await UserCredential.findOne({username})
-        if(user && user.password === password){
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if(user && passwordMatch){
             res.status(200).send("Login Succesful")
         }
         else{

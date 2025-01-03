@@ -12,9 +12,11 @@ function Register(){
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
 
+    const RegisterApi = import.meta.env.VITE_RegisterApi
+
     function handleRegister(event){
         event.preventDefault();
-        fetch("http://localhost:3000/register",{
+        fetch(RegisterApi,{
             method: "POST",
             headers:{
                 "Content-Type" : "application/json"
