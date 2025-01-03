@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom";
 
 function Login(){
 
-    //const navigate = useNavigate()
+    const navigate = useNavigate()
 
 
     const [username,setUsername] = useState("");
@@ -42,7 +42,7 @@ function Login(){
         })
         .then(data =>{
             alert("Succesful Login")
-            //navigate("/Home")
+            navigate("/Home")
         })
         .catch(error => console.log("Error :",error))
     }
@@ -55,7 +55,7 @@ function Login(){
                     <h1>Login</h1>
                     <label>Username: <input value={username} onChange={changeUsername}/></label>
                     <label>Password: <input value={password} onChange={changePassword}/></label>
-                    <button type="button">Go To Register</button>
+                    <button type="button" onClick={() => navigate("/register")}>Go To Register</button>
                     <button type="submit">Login</button>
                 </form>
             </div>

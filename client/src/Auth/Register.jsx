@@ -13,6 +13,7 @@ function Register(){
     const [password,setPassword] = useState("")
 
     const RegisterApi = import.meta.env.VITE_RegisterApi
+    const navigate = useNavigate();
 
     function handleRegister(event){
         event.preventDefault();
@@ -31,7 +32,7 @@ function Register(){
         })
         .then(data =>{
             alert("Succesfully Registered!");
-            // navigate("/login");
+            navigate("/login");
         })
         .catch(error => console.log(error));
     }
@@ -50,8 +51,8 @@ function Register(){
                     <h1>Register</h1>
                     <label>Username: <input value={username} onChange={(event) => setUsername(event.target.value)}/></label>
                     <label>Password: <input value={password} onChange={(event) => setPassword(event.target.value)}/></label>
-                    <button type="button">Go To Login</button>
-                    <button type="submit">Register</button>
+                    <button type="button" onClick={() =>navigate("/login")}>Go To Login</button>
+                    <button type="submit" >Register</button>
                 </form>
             </div>
         </>
