@@ -1,9 +1,10 @@
 require("dotenv").config()
 const express = require("express");
 const app = express();
-const cors = require("cors")
-const mongoose = require("mongoose")
-const bcrypt = require("bcryptjs")
+const cors = require("cors");
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const PORT = process.env.PORT;
 const MONGOURL = process.env.MONGOURL;
@@ -19,6 +20,7 @@ const UserCredentialSchema = new  mongoose.Schema({
 })
 
 const UserCredential = mongoose.model("UserCredential", UserCredentialSchema)
+
 
 //Register Handling
 app.post("/register",async (req,res) =>{
@@ -49,7 +51,9 @@ app.post("/login", async (req,res) =>{
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if(user && passwordMatch){
+            const token = jwt.sign( {id:user._id, username:user.username},secretKey,{expiresIn:"1h"})
             res.status(200).send("Login Succesful")
+            
         }
         else{
             res.status(401).send("Login Failed")

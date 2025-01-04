@@ -17,25 +17,30 @@ function Register(){
 
     function handleRegister(event){
         event.preventDefault();
-        fetch(RegisterApi,{
-            method: "POST",
-            headers:{
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify({username,password})
-        })
-        .then(response =>{
-            if(!response.ok){
-                throw new Error("Network response was not ok")
-            }
-            return response.text()
-        })
-        .then(data =>{
-            alert("Succesfully Registered!");
-            navigate("/login");
-        })
-        .catch(error => console.log(error));
-    }
+        //Check If User Entered Empty
+        if(username === "" || password === ""){
+            alert("Username Or Password acnnot be empty")
+        }
+        else{
+                fetch(RegisterApi,{
+                method: "POST",
+                headers:{
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify({username,password})
+            })
+            .then(response =>{
+                if(!response.ok){
+                    throw new Error("Network response was not ok")
+                }
+                return response.text()
+            })
+            .then(data =>{
+                alert("Succesfully Registered!");
+                navigate("/login");
+            })
+            .catch(error => console.log(error));
+        }}
 
 
 

@@ -27,25 +27,30 @@ function Login(){
 
     function handleLogin(event){
         event.preventDefault();
-        fetch(LoginApi,{
-            method: "POST",
-            headers:{
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify({username:username,password:password})
-        })
-        .then(response => {
-            if(!response.ok){
-                throw new Error("Network response was not ok")
-            }
-            return response.text();
-        })
-        .then(data =>{
-            alert("Succesful Login")
-            navigate("/Home")
-        })
-        .catch(error => console.log("Error :",error))
-    }
+        //Check If User Entered Empty
+        if(username === "" || password === ""){
+            alert("Username Or Password acnnot be empty")
+        }
+        else{
+            fetch(LoginApi,{
+                method: "POST",
+                headers:{
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify({username:username,password:password})
+            })
+            .then(response => {
+                if(!response.ok){
+                    throw new Error("Network response was not ok")
+                }
+                return response.text();
+            })
+            .then(data =>{
+                alert("Succesful Login")
+                navigate("/")
+            })
+            .catch(error => console.log("Error :",error))
+        }}
 
 
     return(
