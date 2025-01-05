@@ -43,11 +43,21 @@ function Login(){
                 if(!response.ok){
                     throw new Error("Network response was not ok")
                 }
-                return response.text();
+                return response.json();
             })
             .then(data =>{
-                alert("Succesful Login")
-                navigate("/")
+                console.log(data)
+                console.log(data.token)
+                if(data.token){
+                    alert("Succesful Login")
+                    
+                    localStorage.setItem("token",data.token);
+                    localStorage.setItem("username",data.username)
+                    navigate("/")
+                }
+                else{
+                    throw new Error("Token Not Received")
+                }
             })
             .catch(error => console.log("Error :",error))
         }}

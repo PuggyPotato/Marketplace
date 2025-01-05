@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 
 const PORT = process.env.PORT;
 const MONGOURL = process.env.MONGOURL;
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 app.use(cors())
 app.use(express.json())
@@ -51,8 +52,13 @@ app.post("/login", async (req,res) =>{
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if(user && passwordMatch){
-            const token = jwt.sign( {id:user._id, username:user.username},secretKey,{expiresIn:"1h"})
-            res.status(200).send("Login Succesful")
+            const token = jwt.sign(
+                {user_id:user._id},
+                process.env.JWT_SECRET_KEY,
+                {expiresIn:"1h"}
+
+            )
+            res.json({token:token,username:username})
             
         }
         else{
