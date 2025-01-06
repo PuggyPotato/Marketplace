@@ -11,7 +11,15 @@ import {useNavigate} from "react-router-dom";
 function Login(){
 
     const navigate = useNavigate()
+    const [isLoggedIn,setIsLoggedIn] = useState()
+    useEffect(() =>{
 
+   
+    const data = localStorage.getItem("token")
+    if(data){
+        navigate("/")
+    }
+    },[])
 
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
@@ -59,7 +67,10 @@ function Login(){
                     throw new Error("Token Not Received")
                 }
             })
-            .catch(error => console.log("Error :",error))
+            .catch(error => {
+                console.log("Error :",error)
+                alert("Username Or Password Is Incorrect")
+            })
         }}
 
 
