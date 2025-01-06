@@ -70,6 +70,30 @@ app.post("/login", async (req,res) =>{
     }
 })
 
+const ItemDetailsSchema = new mongoose.Schema({
+    productName:String,
+    productDescription:String,
+    productPrice:Number,
+    productImage:String
+})
+
+const ItemDetails = mongoose.model("ItemDetails",ItemDetailsSchema)
+
+
+app.post("/listitem", async (req,res) =>{
+    const {productName,productDescription,productPrice,productImage} = req.body;
+
+    try{
+        const itemDetails = new ItemDetails({productName,productDescription,productPrice,productImage});
+        await itemDetails.save();
+        res.status(200).json("Product Saved Succesfully");
+    }
+    catch(error){
+        console.log("Error:",error)
+        res.status(401).json("Failed To Save Product")
+    }
+})
+
 //Just To Test if the code is running well
 app.listen(PORT, () =>{
     console.log("Port is running on " + PORT);

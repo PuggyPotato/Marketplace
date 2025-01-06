@@ -48,7 +48,7 @@ function Home(){
                 {!loggedIn? (<button onClick={() => navigate("/login")}>Go To Login</button>):
                 (<button onClick={logOut}>Log Out</button>)}
                 <button>Go To Marketplace</button>
-                <button>List Item</button>
+                <button onClick={() => navigate("/listitem")}>List Item</button>
                 <h1>Welcome {username}</h1>
             </div>
         </>
