@@ -94,6 +94,16 @@ app.post("/listitem", async (req,res) =>{
     }
 })
 
+app.get("/products", async (req,res) =>{
+    try{
+        const products = await ItemDetails.find();
+        res.json(products)
+    }
+    catch(error){
+        res.status(500).json({error: "Error fetching products from db"})
+    }
+})
+
 //Just To Test if the code is running well
 app.listen(PORT, () =>{
     console.log("Port is running on " + PORT);

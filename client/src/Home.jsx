@@ -31,6 +31,11 @@ function Home(){
             setLoggedIn(false)
             console.log(token)
         }
+
+        window.addEventListener("beforeunload", () =>{
+            localStorage.removeItem("token");
+            localStorage.removeItem("username");
+        })
     },[])
 
     function logOut(event){
@@ -47,7 +52,7 @@ function Home(){
             <div>
                 {!loggedIn? (<button onClick={() => navigate("/login")}>Go To Login</button>):
                 (<button onClick={logOut}>Log Out</button>)}
-                <button>Go To Marketplace</button>
+                <button onClick={() => navigate("/marketplace")}>Go To Marketplace</button>
                 <button onClick={() => navigate("/listitem")}>List Item</button>
                 <h1>Welcome {username}</h1>
             </div>
