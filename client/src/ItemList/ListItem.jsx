@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 
@@ -11,12 +11,25 @@ function ListItem(){
     const [productDescription,setProductDescription] = useState("")
     const [productPrice,setProductPrice] = useState(0);
     const [productImage,setProductImage] = useState();
+    const [seller,setSeller] = useState("")
     const LIST_ITEM_API = import.meta.env.VITE_ListItem
     
 
     const reader = new FileReader;
     const navigate = useNavigate();
 
+    useEffect(() =>{
+        const token = localStorage.getItem("token");
+        const seller = localStorage.getItem("username");
+        setSeller(seller)
+        if(token){
+    
+        }
+        else{
+            alert("You need to Log In Before Listing Items!")
+            navigate("/login")
+        }
+    },[])
 
     
     function handleListItem(event){
@@ -37,7 +50,8 @@ function ListItem(){
                     body:JSON.stringify({productName:productName,
                         productDescription:productDescription,
                         productPrice:productPrice,
-                        productImage:file})
+                        productImage:file,
+                        seller:seller})
                 })
                 .then(response =>{
                     if(!response.ok){

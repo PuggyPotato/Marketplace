@@ -8,10 +8,12 @@ import { useEffect, useState } from "react"
 
 function Marketplace(){
     const [product,setProduct] = useState([])
-  
+    const [userThatListedProduct,setUserThatListedProduct] = useState("")
+    const productAPI = import.meta.env.VITE_products;
 
     useEffect(() =>{
-        fetch("http://localhost:3000/products",{
+
+        fetch(productAPI,{
             method:"GET",
             headers:{
                 "Content-Type":"application/json"
@@ -30,6 +32,8 @@ function Marketplace(){
         .catch(error =>{
             console.log("Error:",error);
         })
+
+        fetch("http:")
     },[])
 
 
@@ -46,6 +50,7 @@ function Marketplace(){
                                     productName = {item.productName}
                                     productPrice = {item.productPrice}
                                     productImage = {item.productImage}
+                                    seller = {item.seller}
                                      /> )
                         })}
                     </ul>

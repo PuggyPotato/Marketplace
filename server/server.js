@@ -74,17 +74,18 @@ const ItemDetailsSchema = new mongoose.Schema({
     productName:String,
     productDescription:String,
     productPrice:Number,
-    productImage:String
+    productImage:String,
+    seller:String
 })
 
 const ItemDetails = mongoose.model("ItemDetails",ItemDetailsSchema)
 
 
 app.post("/listitem", async (req,res) =>{
-    const {productName,productDescription,productPrice,productImage} = req.body;
+    const {productName,productDescription,productPrice,productImage,seller} = req.body;
 
     try{
-        const itemDetails = new ItemDetails({productName,productDescription,productPrice,productImage});
+        const itemDetails = new ItemDetails({productName,productDescription,productPrice,productImage,seller});
         await itemDetails.save();
         res.status(200).json("Product Saved Succesfully");
     }
