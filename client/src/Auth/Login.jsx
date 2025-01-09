@@ -61,6 +61,7 @@ function Login(){
                     
                     localStorage.setItem("token",data.token);
                     localStorage.setItem("username",data.username)
+                    document.cookie = `username=${data.username}; path=/; max-age=3600`;
                     navigate("/")
                 }
                 else{

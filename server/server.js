@@ -5,13 +5,20 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser")
 
 const PORT = process.env.PORT;
 const MONGOURL = process.env.MONGOURL;
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
-app.use(cors())
-app.use(express.json())
+const corsOptions = {
+    origin: 'http://localhost:5173', // Allow requests from the frontend domain
+    credentials: true, // Allow cookies to be sent with the request
+  };
+
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect(MONGOURL)
 
@@ -112,6 +119,7 @@ app.get("/products", async (req,res) =>{
 const OfferDetailsSchema = new  mongoose.Schema({
     buyer:String,
     seller:String,
+    productName:String,
     offerPrice:String,
     status:String
 })
@@ -119,10 +127,10 @@ const OfferDetailsSchema = new  mongoose.Schema({
 const OfferDetails = mongoose.model("OfferDetails",OfferDetailsSchema);
 
 app.post("/offer", async(req,res) =>{
-    const {buyer,seller,offerPrice,status} = req.body;
+    const {buyer,seller,productName,offerPrice,status} = req.body;
 
     try{
-        const offerDetails = new OfferDetails({buyer,seller,offerPrice,status});
+        const offerDetails = new OfferDetails({buyer,seller,productName,offerPrice,status});
         await offerDetails.save();
         console.log("data is succesfully saved!The data:",offerDetails)
         res.status(200).json("Offer Made Succesfully")
@@ -132,8 +140,24 @@ app.post("/offer", async(req,res) =>{
     }
 })
 
+//Fetch Data from Offers
+app.get("/offer", async (req,res) =>{
+    let username;
+    username = req.cookies.username;
+    console.log(username);
+    try{
+        const offers = await OfferDetails.find({seller:username});
+        res.json(offers);
+    }
+    catch(error){
+        console.log("Error",error);
+        res.status(401).json(error)
+    }
+})
+
 //Just To Test if the code is running well
 app.listen(PORT, () =>{
     console.log("Port is running on " + PORT);
 
 })
+

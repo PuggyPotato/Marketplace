@@ -35,6 +35,7 @@ function Home(){
         window.addEventListener("beforeunload", () =>{
             localStorage.removeItem("token");
             localStorage.removeItem("username");
+            document.cookie = "username=; max-age=0; path=/";
         })
     },[])
 
@@ -54,6 +55,7 @@ function Home(){
                 (<button onClick={logOut}>Log Out</button>)}
                 <button onClick={() => navigate("/marketplace")}>Go To Marketplace</button>
                 <button onClick={() => navigate("/listitem")}>List Item</button>
+                <button onClick={() => navigate("/checkoffer")}>Check Offer</button>
                 <h1>Welcome {username}</h1>
             </div>
         </>

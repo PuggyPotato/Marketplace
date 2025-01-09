@@ -18,6 +18,9 @@ function Items({productName,productImage,productPrice,seller}){
             alert("You need to be logged in to make an offer")
             navigate("/login")
         }
+        else if(buyer == seller){
+            alert("Why Are You Buying Your Own Product?")
+        }
         else{
             offerPrice = window.prompt("How Much Are You Offering?($)");
             if(offerPrice != "" || offerPrice <= 0){
@@ -26,7 +29,7 @@ function Items({productName,productImage,productPrice,seller}){
                     headers:{
                         "Content-Type":"application/json"
                     },
-                    body:JSON.stringify({buyer,seller,offerPrice,status})
+                    body:JSON.stringify({buyer,seller,productName,offerPrice,status})
                 })
                 .then(response =>{
                     if(!response.ok){
