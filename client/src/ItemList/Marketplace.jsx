@@ -1,4 +1,4 @@
-import Items from "./ItemList/Items"
+import Items from "./Items"
 import { useEffect, useState } from "react"
 
 

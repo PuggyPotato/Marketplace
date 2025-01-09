@@ -2,7 +2,7 @@ import Login from "./Auth/Login";
 import Register from "./Auth/Register";
 import Home from "./Home";
 import ListItem from "./ItemList/ListItem";
-import Marketplace from "./Marketplace.jsx"
+import Marketplace from "./ItemList/Marketplace.jsx"
 import { BrowserRouter,Route,Routes } from "react-router-dom";
 
 

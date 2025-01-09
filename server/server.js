@@ -44,6 +44,7 @@ app.post("/register",async (req,res) =>{
 
 })
 
+//Check For User Credential When Log In
 app.post("/login", async (req,res) =>{
     const {username,password} = req.body
     console.log(req.body)
@@ -70,6 +71,7 @@ app.post("/login", async (req,res) =>{
     }
 })
 
+//Item Listing Section
 const ItemDetailsSchema = new mongoose.Schema({
     productName:String,
     productDescription:String,
@@ -95,6 +97,7 @@ app.post("/listitem", async (req,res) =>{
     }
 })
 
+//Fetch Data from product to display in marketplace
 app.get("/products", async (req,res) =>{
     try{
         const products = await ItemDetails.find();
@@ -102,6 +105,30 @@ app.get("/products", async (req,res) =>{
     }
     catch(error){
         res.status(500).json({error: "Error fetching products from db"})
+    }
+})
+
+//Storing Offer In Database
+const OfferDetailsSchema = new  mongoose.Schema({
+    buyer:String,
+    seller:String,
+    offerPrice:String,
+    status:String
+})
+
+const OfferDetails = mongoose.model("OfferDetails",OfferDetailsSchema);
+
+app.post("/offer", async(req,res) =>{
+    const {buyer,seller,offerPrice,status} = req.body;
+
+    try{
+        const offerDetails = new OfferDetails({buyer,seller,offerPrice,status});
+        await offerDetails.save();
+        console.log("data is succesfully saved!The data:",offerDetails)
+        res.status(200).json("Offer Made Succesfully")
+    }
+    catch(error){
+        console.log("Error occured:",error)
     }
 })
 
