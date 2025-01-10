@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-
+import Offers from "./Offers"
 
 
 
@@ -25,14 +25,28 @@ function CheckOffer(){
              console.log(data)
                 })
         .catch(error => console.log(`Error:${error}`))
-    },[])
+    },[data.status])
     
 
     return(
         <>
             <div>
-                <h1>Your Offers:</h1>
-                {}
+                {offers.length > 0 ?(
+                    <ul>
+                        {offers.map((item,key) =>{
+                            return(
+                                <Offers key={key}
+                                        productName={item.productName}
+                                        buyer={item.buyer}
+                                        offerPrice={item.offerPrice}
+                                        status={item.status}
+                                        />
+                            )
+                        })}
+                    </ul>
+                ):(
+                    <h1>There Are No Offer Available</h1>
+                )}
             </div>
         </>
     )

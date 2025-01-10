@@ -33,7 +33,7 @@ function Marketplace(){
             console.log("Error:",error);
         })
 
-        fetch("http:")
+      
     },[])
 
 

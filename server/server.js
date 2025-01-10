@@ -155,6 +155,25 @@ app.get("/offer", async (req,res) =>{
     }
 })
 
+//Change the State of Offers
+app.post("/updateOfferState", async (req,res) =>{
+    const {productName,currentStatus} = req.body;
+
+    try{
+        const updatedOffer = await OfferDetails.findOneAndUpdate(
+            { productName: productName }, // Condition to find the offer
+            { $set: { status: currentStatus } }, // Update the status field
+            { new: true } // Ensure the updated document is returned
+            
+        );
+        console.log("Data is updated")
+        res.json(updatedOffer)
+    }
+    catch(error){
+        console.log("Error Saving Data:",error)
+    }
+})
+
 //Just To Test if the code is running well
 app.listen(PORT, () =>{
     console.log("Port is running on " + PORT);
