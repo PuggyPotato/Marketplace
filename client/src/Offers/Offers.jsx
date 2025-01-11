@@ -3,16 +3,15 @@ import { useEffect, useState } from "react"
 
 
 
-function Offers({productName,buyer,offerPrice,status}){
+function Offers({productName,buyer,offerPrice,status,updateStatus}){
     const [offerStatus,setOfferStatus] = useState(status);
 
  
-    useEffect(() => {
-       
-    }, [offerStatus]);
 
     function acceptOffer(){
         const currentStatus = "Offer Accepted"
+        updateStatus(productName,currentStatus);
+        console.log(status)
         setOfferStatus(currentStatus)
         fetch("http://localhost:3000/updateOfferState", {
             method: "POST",
@@ -32,7 +31,6 @@ function Offers({productName,buyer,offerPrice,status}){
             console.log('Data returned:', data); // Add this log
         })
         .catch(error => console.log("Error:",error))
-        console.log(offerStatus)
     }
 
     function rejectOffer(){

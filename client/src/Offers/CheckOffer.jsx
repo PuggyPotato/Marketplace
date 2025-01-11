@@ -25,8 +25,18 @@ function CheckOffer(){
              console.log(data)
                 })
         .catch(error => console.log(`Error:${error}`))
-    },[data.status])
+    },[])
     
+
+    const updateStatus = (productName, newStatus) => {
+        setOffers((prevOffers) =>
+            prevOffers.map((offer) =>
+                offer.productName === productName
+                    ? { ...offer, status: newStatus } // Update the status of the offer
+                    : offer
+            )
+        );
+    };
 
     return(
         <>
@@ -40,6 +50,7 @@ function CheckOffer(){
                                         buyer={item.buyer}
                                         offerPrice={item.offerPrice}
                                         status={item.status}
+                                        updateStatus={updateStatus}
                                         />
                             )
                         })}
