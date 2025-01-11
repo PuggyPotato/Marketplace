@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import Offers from "./Offers"
+import OffersForSeller from "./OffersForSeller"
 
 
 
@@ -10,7 +10,7 @@ function CheckOffer(){
     document.cookie =`username=${username}; path=/; max-age=3600`; // Expires in 1 hour
     console.log(document.cookie.username)
     useEffect(() =>{
-        fetch("http://localhost:3000/offer",{
+        fetch("http://localhost:3000/offer/seller",{
             method: "GET",
             credentials: "include"
         })
@@ -45,7 +45,7 @@ function CheckOffer(){
                     <ul>
                         {offers.map((item,key) =>{
                             return(
-                                <Offers key={key}
+                                <OffersForSeller key={key}
                                         productName={item.productName}
                                         buyer={item.buyer}
                                         offerPrice={item.offerPrice}

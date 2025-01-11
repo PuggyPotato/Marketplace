@@ -140,8 +140,8 @@ app.post("/offer", async(req,res) =>{
     }
 })
 
-//Fetch Data from Offers
-app.get("/offer", async (req,res) =>{
+//Fetch Data from Offers(seller)
+app.get("/offer/seller", async (req,res) =>{
     let username;
     username = req.cookies.username;
     console.log(username);
@@ -154,6 +154,22 @@ app.get("/offer", async (req,res) =>{
         res.status(401).json(error)
     }
 })
+
+//Fetch Data from Offers(buyer)
+app.get("/offer/buyer", async (req,res) =>{
+    let username;
+    username = req.cookies.username;
+    console.log(username);
+    try{
+        const offers = await OfferDetails.find({buyer:username});
+        res.json(offers);
+    }
+    catch(error){
+        console.log("Error",error);
+        res.status(401).json(error)
+    }
+})
+
 
 //Change the State of Offers
 app.post("/updateOfferState", async (req,res) =>{

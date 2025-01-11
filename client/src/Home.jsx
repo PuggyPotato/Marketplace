@@ -56,6 +56,7 @@ function Home(){
                 <button onClick={() => navigate("/marketplace")}>Go To Marketplace</button>
                 <button onClick={() => navigate("/listitem")}>List Item</button>
                 <button onClick={() => navigate("/checkoffer")}>Check Offer</button>
+                <button onClick={() => navigate("/offerlist")}>Check Outgoing Offer</button>
                 <h1>Welcome {username}</h1>
             </div>
         </>

@@ -5,6 +5,7 @@ import ListItem from "./ItemList/ListItem";
 import Marketplace from "./ItemList/Marketplace.jsx";
 import { BrowserRouter,Route,Routes } from "react-router-dom";
 import CheckOffer from "./Offers/CheckOffer.jsx";
+import OffersList from "./Offers/OffersList.jsx";
 
 
 function App(){
@@ -21,6 +22,7 @@ function App(){
           <Route path ="/listitem" element ={<ListItem/>}></Route>
           <Route path ="/Marketplace" element={<Marketplace/>}></Route>
           <Route path ="/checkoffer" element={<CheckOffer/>}></Route>
+          <Route path ="/offerlist" element={<OffersList/>}></Route> 
         </Routes>
       </BrowserRouter>
     </>

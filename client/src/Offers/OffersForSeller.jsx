@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 
 
-function Offers({productName,buyer,offerPrice,status,updateStatus}){
+function OffersForSeller({productName,buyer,offerPrice,status,updateStatus}){
     const [offerStatus,setOfferStatus] = useState(status);
 
  
@@ -34,7 +34,28 @@ function Offers({productName,buyer,offerPrice,status,updateStatus}){
     }
 
     function rejectOffer(){
-
+        const currentStatus = "Offer Rejected"
+        updateStatus(productName,currentStatus);
+        console.log(offerStatus)
+        setOfferStatus(currentStatus)
+        fetch("http://localhost:3000/updateOfferState", {
+            method: "POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({productName,currentStatus})
+        })
+        .then(response =>{
+            if(!response.ok){
+                throw new Error("Network Response Was Not OK")
+            }
+            return response.json();
+        })
+        .then(data =>{
+            alert("Data succesfully saved:",data)
+            console.log('Data returned:', data); // Add this log
+        })
+        .catch(error => console.log("Error:",error))
     }
 
 
@@ -51,8 +72,9 @@ function Offers({productName,buyer,offerPrice,status,updateStatus}){
                     </>
                 ):(
                     <>
-                        <button onClick={acceptOffer}>Accept Offer</button>
-                        <button onClick={rejectOffer}>Reject Offer</button>
+                        <button onClick={rejectOffer} type="button">Reject Offer</button>
+                        <button onClick={acceptOffer} type="button">Accept Offer</button>
+                        
                     </>
                 )}
                 
@@ -61,4 +83,4 @@ function Offers({productName,buyer,offerPrice,status,updateStatus}){
     )
 }
 
-export default Offers
+export default OffersForSeller
