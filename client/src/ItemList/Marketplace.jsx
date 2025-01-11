@@ -12,7 +12,7 @@ function Marketplace(){
     const productAPI = import.meta.env.VITE_products;
 
     useEffect(() =>{
-
+        
         fetch(productAPI,{
             method:"GET",
             headers:{

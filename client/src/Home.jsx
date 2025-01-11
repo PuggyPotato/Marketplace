@@ -15,8 +15,14 @@ function Home(){
     const navigate = useNavigate()
     
     useEffect(() =>{
-        const token = localStorage.getItem("token")
-        const UserUsername = localStorage.getItem("username")
+        const token = document.cookie
+            .split("; ")
+            .find(row => row.startsWith("token="))
+            ?.split("=")[1];
+        const UserUsername = document.cookie
+            .split('; ')
+            .find(row => row.startsWith("username="))
+            ?.split("=")[1]
 
         if(token ==="" || token ==="undefined"){
             setLoggedIn(false)
@@ -31,18 +37,12 @@ function Home(){
             setLoggedIn(false)
             console.log(token)
         }
-
-        window.addEventListener("beforeunload", () =>{
-            localStorage.removeItem("token");
-            localStorage.removeItem("username");
-            document.cookie = "username=; max-age=0; path=/";
-        })
     },[])
 
     function logOut(event){
         event.preventDefault();
-        localStorage.removeItem("token")
-        localStorage.removeItem("username")
+        document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+        document.cookie = "username=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
         setLoggedIn(false)
         alert("Succesfully Logout!")
         navigate("/login")

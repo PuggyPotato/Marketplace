@@ -19,8 +19,17 @@ function ListItem(){
     const navigate = useNavigate();
 
     useEffect(() =>{
-        const token = localStorage.getItem("token");
-        const seller = localStorage.getItem("username");
+        const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('token='))
+        ?.split('=')[1];
+
+        const seller = document.cookie
+        .split("; ")
+        .find(row => row.startsWith("username="))
+        ?.split("=")[1]
+
+
         setSeller(seller)
         if(token){
     

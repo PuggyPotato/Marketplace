@@ -9,9 +9,10 @@ import OffersForBuyer from "./OffersForBuyer"
 function OffersList(){
 
     const [offers,setOffers] = useState("")
+    const offerBuyerAPI = import.meta.env.VITE_OfferBuyerAPI
 
     useEffect(() =>{
-            fetch("http://localhost:3000/offer/buyer",{
+            fetch(offerBuyerAPI,{
                 method: "GET",
                 credentials: "include"
             })

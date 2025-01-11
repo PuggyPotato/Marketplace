@@ -15,8 +15,12 @@ function Login(){
     useEffect(() =>{
 
    
-    const data = localStorage.getItem("token")
-    if(data){
+    const token = document.cookie
+        .split("; ")
+        .find(row => row.startsWith("token="))
+        ?.split("=")[1];
+    
+    if(token){
         navigate("/")
     }
     },[])
@@ -54,13 +58,10 @@ function Login(){
                 return response.json();
             })
             .then(data =>{
-                console.log(data)
-                console.log(data.token)
                 if(data.token){
                     alert("Succesful Login")
                     
-                    localStorage.setItem("token",data.token);
-                    localStorage.setItem("username",data.username)
+                    document.cookie = `token=${data.token}; path=/; max-age=3600`
                     document.cookie = `username=${data.username}; path=/; max-age=3600`;
                     navigate("/")
                 }

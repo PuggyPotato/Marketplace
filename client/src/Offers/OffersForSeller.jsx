@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 
 function OffersForSeller({productName,buyer,offerPrice,status,updateStatus}){
     const [offerStatus,setOfferStatus] = useState(status);
+    
+    const updateOfferStateAPI = import.meta.env.VITE_UpdateOfferStateAPI;
 
  
 
@@ -13,7 +15,7 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus}){
         updateStatus(productName,currentStatus);
         console.log(status)
         setOfferStatus(currentStatus)
-        fetch("http://localhost:3000/updateOfferState", {
+        fetch(updateOfferStateAPI, {
             method: "POST",
             headers:{
                 "Content-Type":"application/json"
@@ -38,7 +40,7 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus}){
         updateStatus(productName,currentStatus);
         console.log(offerStatus)
         setOfferStatus(currentStatus)
-        fetch("http://localhost:3000/updateOfferState", {
+        fetch(updateOfferStateAPI, {
             method: "POST",
             headers:{
                 "Content-Type":"application/json"

@@ -6,11 +6,10 @@ import OffersForSeller from "./OffersForSeller"
 
 function CheckOffer(){
     const [offers,setOffers] = useState([])
-    let username = localStorage.getItem("username")
-    document.cookie =`username=${username}; path=/; max-age=3600`; // Expires in 1 hour
-    console.log(document.cookie.username)
+    const OfferSellerAPI = import.meta.env.VITE_OfferSellerAPI;
+
     useEffect(() =>{
-        fetch("http://localhost:3000/offer/seller",{
+        fetch(OfferSellerAPI,{
             method: "GET",
             credentials: "include"
         })

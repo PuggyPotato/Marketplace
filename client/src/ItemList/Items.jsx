@@ -11,7 +11,16 @@ function Items({productName,productImage,productPrice,seller}){
     
 
     function makeOffer(){
-        const buyer = localStorage.getItem("username");
+        const buyer = document.cookie
+            .split("; ")
+            .find(row => row.startsWith("username="))
+            ?.split("=")[1];
+        const token = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('token='))
+            ?.split('=')[1];
+
+            console.log(token || 'Token cookie not found.');
         let status = "pending";
         let offerPrice;
         if(!buyer){

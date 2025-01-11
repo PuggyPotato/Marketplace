@@ -19,7 +19,7 @@ function Register(){
         event.preventDefault();
         //Check If User Entered Empty
         if(username === "" || password === ""){
-            alert("Username Or Password acnnot be empty")
+            alert("Username Or Password cannnot be empty")
         }
         else{
                 fetch(RegisterApi,{
