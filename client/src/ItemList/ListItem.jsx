@@ -56,7 +56,8 @@ function ListItem(){
                     headers:{
                         "Content-Type": "application/json"
                     },
-                    body:JSON.stringify({productName:productName,
+                    body:JSON.stringify({
+                        productName:productName,
                         productDescription:productDescription,
                         productPrice:productPrice,
                         productImage:file,

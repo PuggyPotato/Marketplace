@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 
 
-function OffersForSeller({productName,buyer,offerPrice,status,updateStatus}){
+function OffersForSeller({productName,buyer,offerPrice,status,updateStatus,productID}){
     const [offerStatus,setOfferStatus] = useState(status);
     
     const updateOfferStateAPI = import.meta.env.VITE_UpdateOfferStateAPI;
@@ -12,7 +12,7 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus}){
 
     function acceptOffer(){
         const currentStatus = "Offer Accepted"
-        updateStatus(productName,currentStatus);
+        updateStatus(productID,currentStatus);
         console.log(status)
         setOfferStatus(currentStatus)
         fetch(updateOfferStateAPI, {
@@ -20,7 +20,7 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus}){
             headers:{
                 "Content-Type":"application/json"
             },
-            body:JSON.stringify({productName,currentStatus})
+            body:JSON.stringify({productID,currentStatus})
         })
         .then(response =>{
             if(!response.ok){
@@ -37,7 +37,7 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus}){
 
     function rejectOffer(){
         const currentStatus = "Offer Rejected"
-        updateStatus(productName,currentStatus);
+        updateStatus(productID,currentStatus);
         console.log(offerStatus)
         setOfferStatus(currentStatus)
         fetch(updateOfferStateAPI, {
@@ -45,7 +45,7 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus}){
             headers:{
                 "Content-Type":"application/json"
             },
-            body:JSON.stringify({productName,currentStatus})
+            body:JSON.stringify({productID,currentStatus})
         })
         .then(response =>{
             if(!response.ok){

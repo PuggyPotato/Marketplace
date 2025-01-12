@@ -51,6 +51,7 @@ function Marketplace(){
                                     productPrice = {item.productPrice}
                                     productImage = {item.productImage}
                                     seller = {item.seller}
+                                    productID={item._id}
                                      /> )
                         })}
                     </ul>

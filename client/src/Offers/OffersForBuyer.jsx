@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 
 
-function OffersForBuyer({productName,buyer,offerPrice,status,updateStatus}){
+function OffersForBuyer({productName,buyer,offerPrice,status}){
 
     return(
         <>

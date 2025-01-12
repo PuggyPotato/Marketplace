@@ -173,11 +173,11 @@ app.get("/offer/buyer", async (req,res) =>{
 
 //Change the State of Offers
 app.post("/updateOfferState", async (req,res) =>{
-    const {productName,currentStatus} = req.body;
+    const {productID,currentStatus} = req.body;
 
     try{
         const updatedOffer = await OfferDetails.findOneAndUpdate(
-            { productName: productName }, // Condition to find the offer
+            { _id: productID }, // Condition to find the offer
             { $set: { status: currentStatus } }, // Update the status field
             { new: true } // Ensure the updated document is returned
             
