@@ -8,6 +8,8 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const http = require("http");
 const {Server} = require("socket.io");
+const { timeStamp } = require("console");
+const { type } = require("os");
 
 const PORT = process.env.PORT;
 const MONGOURL = process.env.MONGOURL;
@@ -196,8 +198,47 @@ app.post("/updateOfferState", async (req,res) =>{
 const server = http.createServer(app);
 const io = new Server(server, {cors:true})
 
+const conversationSchema = new mongoose.Schema({
+    participant : [String],
+    message :[
+        {
+            sender:String,
+            content:String,
+            timeStamp:{
+                type:Date,
+                default:Date.now
+            }
+        }
+    ]
+});
+
+const Conversation = mongoose.model("Conversation",conversationSchema)
+
 io.on("connection", (socket) =>{
-    socket.emit("initialConnection", "hello")
+    socket.on("messageDetails", async ({buyer,seller,message}) =>{
+
+        let conversation = await Conversation.findOne({
+            participant:{ $all: [buyer,seller]},
+        });
+
+        if(!conversation){
+
+            conversation = new Conversation({
+                participant: [buyer,seller],
+                message:[]
+            });
+        }
+
+        conversation.message.push({
+            sender:buyer,
+            content:message
+        })
+
+        await conversation.save();
+        console.log("Conversation updated:",conversation    )
+
+        console.log("message from buyer " + buyer + "to seller " + seller + " is " + message);
+    })
 })
 
 //Just To Test if the code is running well

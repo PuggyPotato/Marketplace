@@ -61,7 +61,7 @@ function Items({productName,productImage,productPrice,seller,productID}){
                 <img src={productImage} style={{width:"100px",height:"100px"}} alt="image is here"></img>
                 <h4>Price:{productPrice}$</h4>
                 <h5>Sold by {seller}</h5>
-                <button>Chat With Seller</button>
+                <button onClick={() => navigate(`/message?seller=${seller}`)}>Chat With Seller</button>
                 <button onClick={makeOffer}>Make An Offer</button>
             </div>
         </>
