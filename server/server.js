@@ -5,7 +5,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser");
+const http = require("http");
+const {Server} = require("socket.io");
 
 const PORT = process.env.PORT;
 const MONGOURL = process.env.MONGOURL;
@@ -190,8 +192,16 @@ app.post("/updateOfferState", async (req,res) =>{
     }
 })
 
+//Initialise socket.io
+const server = http.createServer(app);
+const io = new Server(server, {cors:true})
+
+io.on("connection", (socket) =>{
+    socket.emit("initialConnection", "hello")
+})
+
 //Just To Test if the code is running well
-app.listen(PORT, () =>{
+server.listen(PORT, () =>{
     console.log("Port is running on " + PORT);
 
 })
