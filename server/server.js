@@ -203,6 +203,7 @@ const conversationSchema = new mongoose.Schema({
     message :[
         {
             buyer:String,
+            seller:String,
             content:String,
             timeStamp:{
                 type:Date,
@@ -231,6 +232,7 @@ io.on("connection", (socket) =>{
 
         conversation.message.push({
             buyer:buyer,
+            seller:seller,
             content:message
         })
 
@@ -250,10 +252,31 @@ app.get("/prevMessage", async (req,res) =>{
         const conversation = await Conversation.findOne({
             participant: {$all:[buyer,seller]}
         })
+        if(conversation){
         res.json(conversation.message)
+        
+        }
+        else{
+            console.log(conversation)
+            res.json("You Have No Message Yet!")
+        }
     }
     catch(error){
         console.log("Error encountered:",error)
+    }
+})
+
+app.get("/checkMessages",async (req,res) =>{
+    const user = req.cookies.username;
+
+    try{
+        let conversation = await Conversation.findOne({
+            participant: {$all:[user]}
+        })
+        res.json(conversation.message)
+    }
+    catch(error){
+        console.log("Encountered Error:",error)
     }
 })
 

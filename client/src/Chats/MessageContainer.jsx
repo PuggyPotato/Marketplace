@@ -26,10 +26,17 @@ function MessageContainer(){
     useEffect(() =>{
         if(buyer){
             socket.current = io("http://localhost:3000");
+            socket.current.on("newMessage", (newMessage) =>{
+                setPrevMessage((prev) => [...prev,newMessage])
+            })
         }
         else{
             alert("You Need To Be Logged In!")
             navigate("/login")
+        }
+
+        return() =>{
+            socket.current.disconnect();
         }
     },[])
 

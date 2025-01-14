@@ -7,6 +7,7 @@ import { BrowserRouter,Route,Routes } from "react-router-dom";
 import CheckOffer from "./Offers/CheckOffer.jsx";
 import OffersList from "./Offers/OffersList.jsx";
 import MessageContainer from "./Chats/MessageContainer.jsx";
+import CheckMessages from "./Chats/CheckMessages.jsx";
 
 
 function App(){
@@ -25,6 +26,7 @@ function App(){
           <Route path ="/checkoffer" element={<CheckOffer/>}></Route>
           <Route path ="/offerlist" element={<OffersList/>}></Route> 
           <Route path ="/message" element={<MessageContainer/>}></Route>
+          <Route path ="/checkMessages" element={<CheckMessages/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
