@@ -48,7 +48,13 @@ function MessageContainer(){
             }
             return response.json();
         })
-        .then(data => console.log(data))
+        .then(message => {
+            const sortedMessage = message.sort(
+                (a,b) => new Date(a.timestamp) - new Date(b.timestamp)
+            ); 
+            console.log(sortedMessage)
+            setPrevMessage(sortedMessage)
+            })
         .catch(error => console.log("Error Encountered:",error))
     },[])
 
@@ -64,19 +70,29 @@ function MessageContainer(){
     }
 
 
-    return(
-        <>
-            <div>
-                <form onSubmit={sendMessage}>
-                    <label>Enter Message Here:
-                        <input value={message} onChange={(e) =>setMessage(e.target.value)}/>
-                    </label>
-                        <button type="submit">Send Message</button>
-                </form>
-                <Message/>
-            </div>
-        </>
-    )
+        return(
+            <>
+                <div>
+                    <form onSubmit={sendMessage}>
+                        <label>Enter Message Here:
+                            <input value={message} onChange={(e) =>setMessage(e.target.value)}/>
+                        </label>
+                            <button type="submit">Send Message</button>
+                    </form>
+                    <div>
+                        {!prevMessage.length > 0 ? (
+                            <></>
+                        ):
+                        (<ul>
+                            {prevMessage.map((item,key) =>(
+                                <Message MessageFromBuyer={item.content} key={key} Buyer={item.buyer}/>
+                            ))}
+                            </ul>
+                        )}
+                    </div>
+                </div>
+            </>
+        )
 }
 
 export default MessageContainer

@@ -248,7 +248,7 @@ app.get("/prevMessage", async (req,res) =>{
 
     try{
         const conversation = await Conversation.findOne({
-            participant:[buyer,seller]
+            participant: {$all:[buyer,seller]}
         })
         res.json(conversation.message)
     }
