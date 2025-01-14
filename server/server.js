@@ -202,7 +202,7 @@ const conversationSchema = new mongoose.Schema({
     participant : [String],
     message :[
         {
-            sender:String,
+            buyer:String,
             content:String,
             timeStamp:{
                 type:Date,
@@ -230,7 +230,7 @@ io.on("connection", (socket) =>{
         }
 
         conversation.message.push({
-            sender:buyer,
+            buyer:buyer,
             content:message
         })
 
@@ -239,6 +239,22 @@ io.on("connection", (socket) =>{
 
         console.log("message from buyer " + buyer + "to seller " + seller + " is " + message);
     })
+})
+
+//Retrieve Previous Message from the DB
+app.get("/prevMessage", async (req,res) =>{
+    const buyer = req.cookies.username;
+    const seller = req.query.seller;
+
+    try{
+        const conversation = await Conversation.findOne({
+            participant:[buyer,seller]
+        })
+        res.json(conversation.message)
+    }
+    catch(error){
+        console.log("Error encountered:",error)
+    }
 })
 
 //Just To Test if the code is running well

@@ -9,12 +9,12 @@ function Items({productName,productImage,productPrice,seller,productID}){
     const navigate = useNavigate();
     const makeOfferAPI = import.meta.env.VITE_makeOfferAPI
     
-
-    function makeOffer(){
-        const buyer = document.cookie
+    const buyer = document.cookie
             .split("; ")
             .find(row => row.startsWith("username="))
             ?.split("=")[1];
+
+    function makeOffer(){
         const token = document.cookie
             .split('; ')
             .find(row => row.startsWith('token='))
@@ -54,6 +54,16 @@ function Items({productName,productImage,productPrice,seller,productID}){
         }
     }
 
+    function chatWithSeller(){
+        if(!buyer){
+            alert("You need To Be Logged In!")
+            navigate("/login")
+        }
+        else{
+            navigate(`/message?seller=${seller}`)
+        }
+    }
+
     return(
         <>
             <div>
@@ -61,7 +71,7 @@ function Items({productName,productImage,productPrice,seller,productID}){
                 <img src={productImage} style={{width:"100px",height:"100px"}} alt="image is here"></img>
                 <h4>Price:{productPrice}$</h4>
                 <h5>Sold by {seller}</h5>
-                <button onClick={() => navigate(`/message?seller=${seller}`)}>Chat With Seller</button>
+                <button onClick={chatWithSeller}>Chat With Seller</button>
                 <button onClick={makeOffer}>Make An Offer</button>
             </div>
         </>
