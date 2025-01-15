@@ -72,7 +72,10 @@ function MessageContainer(){
 
         }
         else{
+            console.log("test")
             socket.current.emit("messageDetails",({buyer,seller,message}))
+            setPrevMessage([...prevMessage,{buyer:buyer,content:message}])
+            console.log(prevMessage)
         }
     }
 
