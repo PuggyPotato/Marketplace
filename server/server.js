@@ -16,7 +16,7 @@ const MONGOURL = process.env.MONGOURL;
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 const corsOptions = {
-    origin: 'http://localhost:5173', // Allow requests from the frontend domain
+    origin: ['http://localhost:5173',"http://localhost:5174"], // Allow requests from the frontend domain
     credentials: true, // Allow cookies to be sent with the request
   };
 
@@ -230,6 +230,8 @@ io.on("connection", (socket) =>{
             });
         }
 
+        socket.broadcast.emit("newMessage",{buyer:buyer,seller:seller,content:message})
+
         conversation.message.push({
             buyer:buyer,
             seller:seller,
@@ -237,6 +239,7 @@ io.on("connection", (socket) =>{
         })
 
         await conversation.save();
+        
         console.log("Conversation updated:",conversation    )
 
         console.log("message from buyer " + buyer + "to seller " + seller + " is " + message);
@@ -245,8 +248,20 @@ io.on("connection", (socket) =>{
 
 //Retrieve Previous Message from the DB
 app.get("/prevMessage", async (req,res) =>{
-    const buyer = req.cookies.username;
-    const seller = req.query.seller;
+    
+    if(req.query.seller && req.query.seller !== "null"){
+        var buyer = req.cookies.username 
+        var seller = req.query.seller;
+        console.log(req.query.seller + "IDK WTF")
+        console.log(req.query.buyer + "THIS SHOULD BE BUYER")
+    }
+    else{
+        var seller = req.cookies.username;
+        var buyer = req.query.buyer
+        console.log(req.query.buyer + "IDK")
+        console.log("seller is" + seller)
+        console.log("buyer is" + buyer)
+    }
 
     try{
         const conversation = await Conversation.findOne({

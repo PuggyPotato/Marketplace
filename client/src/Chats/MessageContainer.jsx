@@ -14,20 +14,35 @@ function MessageContainer(){
     const navigate = useNavigate();
 
     const socket = useRef(null);
-    const buyer = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('username='))
-        ?.split('=')[1];
     
     const urlParams = new URLSearchParams(window.location.search);
-    const seller = urlParams.get("seller");
-    
+    if(urlParams.get("seller")){
+        var seller = urlParams.get("seller");
+    }
+    else{
+        var seller = document.cookie
+        .split('; ')
+            .find(row => row.startsWith('username='))
+            ?.split('=')[1];
+
+    };
+    if(urlParams.get("buyer")){
+        var buyer = urlParams.get("buyer")
+    }
+    else{
+        var buyer = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('username='))
+            ?.split('=')[1];
+    }
 
     useEffect(() =>{
+    
         if(buyer){
             socket.current = io("http://localhost:3000");
             socket.current.on("newMessage", (newMessage) =>{
                 setPrevMessage((prev) => [...prev,newMessage])
+                console.log(newMessage)
             })
         }
         else{
@@ -38,10 +53,12 @@ function MessageContainer(){
         return() =>{
             socket.current.disconnect();
         }
-    },[])
+    },[prevMessage])
 
     //Fetch previous message from db
     useEffect(() =>{
+        //Sending Seller As Query if User is Buyer
+        if(seller){
         fetch(`http://localhost:3000/prevMessage?seller=${seller}`, {
             method:"GET",
             credentials:"include",
@@ -63,6 +80,33 @@ function MessageContainer(){
             setPrevMessage(sortedMessage)
             })
         .catch(error => console.log("Error Encountered:",error))
+        }
+
+        //Sending buyer As Query If User is Seller
+        else if(buyer){
+            fetch(`http://localhost:3000/prevMessage?buyer=${buyer}`, {
+                method:"GET",
+                credentials:"include",
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(response =>{
+                if(!response.ok){
+                    throw new Error("Network Response was not ok")
+                }
+                return response.json();
+            })
+            .then(message => {
+                const sortedMessage = message.sort(
+                    (a,b) => new Date(a.timestamp) - new Date(b.timestamp)
+                ); 
+                console.log(sortedMessage)
+                setPrevMessage(sortedMessage)
+                })
+            .catch(error => console.log("Error Encountered:",error))
+            
+        }
     },[])
 
 
@@ -72,10 +116,9 @@ function MessageContainer(){
 
         }
         else{
-            console.log("test")
             socket.current.emit("messageDetails",({buyer,seller,message}))
-            setPrevMessage([...prevMessage,{buyer:buyer,content:message}])
-            console.log(prevMessage)
+            setPrevMessage([...prevMessage,{buyer:buyer,seller:seller,content:message}])
+            console.log(buyer,seller,message)
         }
     }
 
@@ -95,7 +138,7 @@ function MessageContainer(){
                         ):
                         (<ul>
                             {prevMessage.map((item,key) =>(
-                                <Message MessageFromBuyer={item.content} key={key} Buyer={item.buyer}/>
+                                <Message MessageFromBuyer={item.content} key={key} Buyer={item.buyer} Seller={item.seller}/>
                             ))}
                             </ul>
                         )}
