@@ -3,13 +3,13 @@
 
 
 
-function Message({Buyer,MessageFromBuyer,Seller}){
+function Message({Sender,MessageFromSender}){
 
 
     return(
         <>
             <div>
-                <p>{Buyer}:{MessageFromBuyer}</p>
+                <p>{Sender}:{MessageFromSender}</p>
             </div>
         </>
     )

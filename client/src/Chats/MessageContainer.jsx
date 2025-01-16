@@ -16,6 +16,11 @@ function MessageContainer(){
     const socket = useRef(null);
     
     const urlParams = new URLSearchParams(window.location.search);
+    const sender = document.cookie
+        .split('; ')
+            .find(row => row.startsWith('username='))
+            ?.split('=')[1];
+            
     if(urlParams.get("seller")){
         var seller = urlParams.get("seller");
     }
@@ -116,9 +121,9 @@ function MessageContainer(){
 
         }
         else{
-            socket.current.emit("messageDetails",({buyer,seller,message}))
-            setPrevMessage([...prevMessage,{buyer:buyer,seller:seller,content:message}])
-            console.log(buyer,seller,message)
+            socket.current.emit("messageDetails",({buyer,seller,message,sender}))
+            setPrevMessage([...prevMessage,{buyer:buyer,seller:seller,content:message,sender:sender}])
+            console.log(buyer,seller,message,sender)
         }
     }
 
@@ -138,7 +143,7 @@ function MessageContainer(){
                         ):
                         (<ul>
                             {prevMessage.map((item,key) =>(
-                                <Message MessageFromBuyer={item.content} key={key} Buyer={item.buyer} Seller={item.seller}/>
+                                <Message Sender={item.sender} MessageFromSender={item.content} key={key}/>
                             ))}
                             </ul>
                         )}

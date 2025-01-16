@@ -205,18 +205,20 @@ const conversationSchema = new mongoose.Schema({
             buyer:String,
             seller:String,
             content:String,
+            sender:String,
             timeStamp:{
                 type:Date,
                 default:Date.now
             }
         }
-    ]
+    ],
+
 });
 
 const Conversation = mongoose.model("Conversation",conversationSchema)
 
 io.on("connection", (socket) =>{
-    socket.on("messageDetails", async ({buyer,seller,message}) =>{
+    socket.on("messageDetails", async ({buyer,seller,message,sender}) =>{
 
         let conversation = await Conversation.findOne({
             participant:{ $all: [buyer,seller]},
@@ -230,12 +232,13 @@ io.on("connection", (socket) =>{
             });
         }
 
-        socket.broadcast.emit("newMessage",{buyer:buyer,seller:seller,content:message})
+        socket.broadcast.emit("newMessage",{buyer:buyer,seller:seller,content:message,sender:sender})
 
         conversation.message.push({
             buyer:buyer,
             seller:seller,
-            content:message
+            content:message,
+            sender:sender,
         })
 
         await conversation.save();
