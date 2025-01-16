@@ -110,8 +110,14 @@ app.post("/listitem", async (req,res) =>{
 
 //Fetch Data from product to display in marketplace
 app.get("/products", async (req,res) =>{
+    let username;
+    username = req.cookies.username;
+    console.log(username)
+    console.log(username)
     try{
-        const products = await ItemDetails.find();
+        const products = await ItemDetails.find({
+            seller: {$ne :username}
+        });
         res.json(products)
     }
     catch(error){

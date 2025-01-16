@@ -17,7 +17,8 @@ function Marketplace(){
             method:"GET",
             headers:{
                 "Content-Type":"application/json"
-            }
+            },
+            credentials:"include"
         })
         .then(response =>{
             if(!response.ok){
