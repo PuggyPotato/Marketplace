@@ -9,6 +9,7 @@ import OffersList from "./Offers/OffersList.jsx";
 import MessageContainer from "./Chats/MessageContainer.jsx";
 import CheckMessages from "./Chats/CheckMessages.jsx";
 import OwnListing from "./ItemList/CheckOwnListings.jsx";
+import EditListing from "./ItemList/EditListing.jsx";
 
 
 function App(){
@@ -29,6 +30,7 @@ function App(){
           <Route path ="/message" element={<MessageContainer/>}></Route>
           <Route path ="/checkMessages" element={<CheckMessages/>}></Route>
           <Route path ="/checkListings" element={<OwnListing/>}></Route>
+          <Route path ="/editlisting" element={<EditListing/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

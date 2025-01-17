@@ -139,6 +139,41 @@ app.get("/myProducts", async (req,res) =>{
     }
 })
 
+//Fetch Data to be Edited
+app.get("/myProducts/edit", async (req,res) =>{
+    const productID = req.query.productID
+    console.log(productID)
+    try{
+        const product = await ItemDetails.findOne({
+            _id : productID
+        })
+        res.json(product);
+        console.log(product)
+    }
+    catch(error){
+        console.log("Error Encountered:",error)
+    }
+})
+
+app.post("/editListing", async (req,res) =>{
+    const productID = req.query.productID
+    const {productName,productDescription,productPrice,productImage} = req.body
+    const updateDetails ={ productName:productName,
+        productDescription:productDescription,
+        productPrice:productPrice,
+        productImage,productImage
+    }
+
+    
+    try{
+        const product = await ItemDetails.findByIdAndUpdate(productID,updateDetails)
+        res.json("Succesfully Updated!")
+    }
+    catch(error){
+        console.log("Error encountered:",error)
+    }
+})
+
 //Storing Offer In Database
 const OfferDetailsSchema = new  mongoose.Schema({
     buyer:String,
