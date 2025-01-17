@@ -58,6 +58,7 @@ function Home(){
                 <button onClick={() => navigate("/checkoffer")}>Check Offer</button>
                 <button onClick={() => navigate("/offerlist")}>Check Outgoing Offer</button>
                 <button onClick={() => navigate("/checkMessages")}>Check Messages</button>
+                <button onClick={() => navigate("/checkListings")}>Check Own Listings</button>
                 <h1>Welcome {username}</h1>
             </div>
         </>

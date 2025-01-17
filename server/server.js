@@ -16,7 +16,7 @@ const MONGOURL = process.env.MONGOURL;
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 const corsOptions = {
-    origin: ['http://localhost:5173',"http://localhost:5174"], // Allow requests from the frontend domain
+    origin: ['http://localhost:5173',"http://localhost:5174","http://localhost:5175"], // Allow requests from the frontend domain
     credentials: true, // Allow cookies to be sent with the request
   };
 
@@ -125,6 +125,20 @@ app.get("/products", async (req,res) =>{
     }
 })
 
+//Fetch Data for seller to edit
+app.get("/myProducts", async (req,res) =>{
+    let username = req.cookies.username;
+    try{
+        const product = await ItemDetails.find({
+            seller: username
+        })
+        res.json(product);
+    }
+    catch(error){
+        console.log("Error Encountered:",error)
+    }
+})
+
 //Storing Offer In Database
 const OfferDetailsSchema = new  mongoose.Schema({
     buyer:String,
@@ -224,8 +238,11 @@ const conversationSchema = new mongoose.Schema({
 const Conversation = mongoose.model("Conversation",conversationSchema)
 
 io.on("connection", (socket) =>{
-    socket.on("messageDetails", async ({buyer,seller,message,sender}) =>{
+    
+    
 
+    socket.on("messageDetails", async ({buyer,seller,message,sender}) =>{
+        
         let conversation = await Conversation.findOne({
             participant:{ $all: [buyer,seller]},
         });
@@ -261,15 +278,11 @@ app.get("/prevMessage", async (req,res) =>{
     if(req.query.seller && req.query.seller !== "null"){
         var buyer = req.cookies.username 
         var seller = req.query.seller;
-        console.log(req.query.seller + "IDK WTF")
-        console.log(req.query.buyer + "THIS SHOULD BE BUYER")
     }
     else{
         var seller = req.cookies.username;
         var buyer = req.query.buyer
         console.log(req.query.buyer + "IDK")
-        console.log("seller is" + seller)
-        console.log("buyer is" + buyer)
     }
 
     try{

@@ -41,6 +41,13 @@ function MessageContainer(){
             ?.split('=')[1];
     }
 
+    if(buyer == sender){
+        var senderRole = "buyer"
+    }
+    else if(seller == sender){
+        var senderRole = "seller"
+    }
+
     useEffect(() =>{
     
         if(buyer){
@@ -49,6 +56,7 @@ function MessageContainer(){
                 setPrevMessage((prev) => [...prev,newMessage])
                 console.log(newMessage)
             })
+
         }
         else{
             alert("You Need To Be Logged In!")
@@ -112,6 +120,7 @@ function MessageContainer(){
             .catch(error => console.log("Error Encountered:",error))
             
         }
+        
     },[])
 
 
