@@ -12,7 +12,7 @@ function EditListing(){
     const [productPrice,setProductPrice] = useState("")
     const [productImage,setProductImage] = useState("")
     
-    const reader =  new FileReader
+    const reader =  new FileReader;
     const navigate = useNavigate();
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -49,16 +49,16 @@ function EditListing(){
             })
             .then(response =>{
                 if(!response.ok){
-                    throw new Error("Network response was not ok")
+                    throw new Error("Network response was not ok");
                 }
-                return response.json()
+                return response.json();
             })
             .then(data =>{
-                console.log("Success:",data)
-                navigate("/checkListings")
+                console.log("Success:",data);
+                navigate("/checkListings");
             })
             .catch(error =>{
-                console.log("Error",error)
+                console.log("Error",error);
             })
         
     }
@@ -67,11 +67,46 @@ function EditListing(){
         const file = e.target.files[0];
          reader.onload = () =>{
                 const file = reader.result;
-                console.log(file)
-                setProductImage(file)
+                console.log(file);
+                setProductImage(file);
          }
          if(file){
             reader.readAsDataURL(file);
+        }
+    }
+
+    function deleteListing(e){
+        e.preventDefault();
+        let confirmation;
+        confirmation = (window.prompt("Are You Sure You Want To Delete This Listing? (Y/N)")).toLowerCase();
+        if(confirmation == "y"){
+            fetch(`http://localhost:3000/deleteListing?productID=${productID}`,{
+                method:"DELETE",
+                credentials:"include",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({productID})
+            })
+            .then(response =>{
+                if(!response.ok){
+                    throw new Error("Network response was not ok!")
+                }
+                return response.json()
+            })
+            .then(data =>{
+                alert(data)
+                navigate("/checkListings")
+            })
+            .catch(error =>{
+                console.log("Error Encountered:",error)
+            });
+        }
+        else if(confirmation == "n"){
+
+        }
+        else{
+
         }
     }
 
@@ -92,6 +127,7 @@ function EditListing(){
                     
                     <label>Change your Image:</label>
                     <input type="file" accept=".png,.jpg" onChange={handleImageChange}></input><br/>
+                    <button type="button" onClick={deleteListing}>Delete Listing</button>
                     <button type="submit">Save Changes</button>
                    
                 </form>

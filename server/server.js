@@ -155,6 +155,7 @@ app.get("/myProducts/edit", async (req,res) =>{
     }
 })
 
+//Update The edited Data
 app.post("/editListing", async (req,res) =>{
     const productID = req.query.productID
     const {productName,productDescription,productPrice,productImage} = req.body
@@ -168,6 +169,18 @@ app.post("/editListing", async (req,res) =>{
     try{
         const product = await ItemDetails.findByIdAndUpdate(productID,updateDetails)
         res.json("Succesfully Updated!")
+    }
+    catch(error){
+        console.log("Error encountered:",error)
+    }
+})
+
+//Delete listings
+app.delete("/deleteListing",async (req,res) =>{
+    const {productID} = req.body
+    try{
+        await ItemDetails.findByIdAndDelete(productID)
+        res.json("Data Succesfully Deleted")
     }
     catch(error){
         console.log("Error encountered:",error)

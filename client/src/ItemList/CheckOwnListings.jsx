@@ -1,4 +1,3 @@
-import Items from "./Items"
 import { useEffect, useState } from "react"
 import OwnListingsEditable from "./OwnListings"
 
@@ -18,16 +17,16 @@ function CheckOwnListing(){
             headers:{
                 "Content-Type":"application/json"
             },
-            credentials:"include"
+            credentials:"include",
         })
         .then(response =>{
             if(!response.ok){
-                throw new Error("Network response was not ok")
+                throw new Error("Network response was not ok");
             }
             return response.json();
         })
         .then((data) =>{
-            console.log("Success: ",data)
+            console.log("Success: ",data);
             setProduct(data);
         })
         .catch(error =>{

@@ -17,7 +17,7 @@ function OwnListings({productName,productImage,productPrice,productDescription,p
                 <img src={productImage} style={{width:"100px",height:"100px"}} alt="image is here"></img>
                 <h4>Price:{productPrice}$</h4>
                 <p>Seller:{seller}</p>
-                <button onClick={() =>navigate(`/editlisting?productID=${productID}`)}>Edit</button>
+                <button onClick={() =>navigate(`/editlisting?productID=${productID}`)}>Edit/Delete Listing</button>
             </div>
         </>
     )
