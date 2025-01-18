@@ -1,5 +1,6 @@
-import { useEffect, useState, } from "react";
+import { useEffect, useState, useRef } from "react";
 import {useNavigate} from "react-router-dom";
+
 
 
 
@@ -23,6 +24,10 @@ function Login(){
     if(token){
         navigate("/")
     }
+
+    
+
+    
     },[])
 
     const [username,setUsername] = useState("");
@@ -41,7 +46,7 @@ function Login(){
         event.preventDefault();
         //Check If User Entered Empty
         if(username === "" || password === ""){
-            alert("Username Or Password acnnot be empty")
+            alert("Username Or Password cannnot be empty")
         }
         else{
             fetch(LoginApi,{
@@ -64,6 +69,8 @@ function Login(){
                     document.cookie = `token=${data.token}; path=/; max-age=3600`
                     document.cookie = `username=${data.username}; path=/; max-age=3600`;
                     navigate("/")
+                  
+                    
                 }
                 else{
                     throw new Error("Token Not Received")

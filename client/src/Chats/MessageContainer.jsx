@@ -50,9 +50,13 @@ function MessageContainer(){
 
     useEffect(() =>{
     
-        if(buyer){
+        if(sender){
             socket.current = io("http://localhost:3000");
+            console.log("socket initialised")
+            socket.current.emit("userOnline",sender)
             socket.current.on("newMessage", (newMessage) =>{
+                console.log("i received message")
+
                 setPrevMessage((prev) => [...prev,newMessage])
                 console.log(newMessage)
             })
@@ -158,6 +162,7 @@ function MessageContainer(){
                         )}
                     </div>
                 </div>
+                
             </>
         )
 }

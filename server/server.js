@@ -28,7 +28,8 @@ mongoose.connect(MONGOURL)
 
 const UserCredentialSchema = new  mongoose.Schema({
     username:String,
-    password:String
+    password:String,
+    socketID:String
 })
 
 const UserCredential = mongoose.model("UserCredential", UserCredentialSchema)
@@ -42,7 +43,7 @@ app.post("/register",async (req,res) =>{
                 const salt = await bcrypt.genSalt(10);
                 const hash = await bcrypt.hash(password,salt)
 
-                const userCredential = new UserCredential({username,password:hash});
+                const userCredential = new UserCredential({username:username,password:hash});
 
                 await userCredential.save()
                 res.status(200).send("Data Saved Succesfully");
@@ -156,7 +157,7 @@ app.get("/myProducts/edit", async (req,res) =>{
 })
 
 //Update The edited Data
-app.post("/editListing", async (req,res) =>{
+app.put("/editListing", async (req,res) =>{
     const productID = req.query.productID
     const {productName,productDescription,productPrice,productImage} = req.body
     const updateDetails ={ productName:productName,
@@ -274,6 +275,7 @@ const conversationSchema = new mongoose.Schema({
             seller:String,
             content:String,
             sender:String,
+            
             timeStamp:{
                 type:Date,
                 default:Date.now
@@ -286,11 +288,50 @@ const conversationSchema = new mongoose.Schema({
 const Conversation = mongoose.model("Conversation",conversationSchema)
 
 io.on("connection", (socket) =>{
+    socket.on("userOnline",async (username) =>{
+        await UserCredential.findOneAndUpdate(
+            {username:username},
+            {$set : {socketID:socket.id}},
+            {new:true})
     
-    
+    })
 
     socket.on("messageDetails", async ({buyer,seller,message,sender}) =>{
+        console.log("TEST!")
+        if(sender == buyer){
+            const buyerSocketData = await UserCredential.findOne({
+                username:buyer
+            });
+            const buyerSocketID = buyerSocketData.socketID;
+            const sellerSocketData = await UserCredential.findOne({
+                username:seller
+            })
+            const sellerSocketID = sellerSocketData.socketID;
+            console.log(buyerSocketID,"Buyersocket")
+            console.log(sellerSocketID,"sellersocket")
+            socket.to(buyerSocketID).emit("newMessage",{buyer:buyer,seller:seller,content:message,sender:sender})
+            socket.to(sellerSocketID).emit("newMessage",{buyer:buyer,seller:seller,content:message,sender:sender})
         
+        }
+        else if(sender == seller){
+            const sellerSocketData = await UserCredential.findOne({
+                username:seller
+            })
+            const sellerSocketID = sellerSocketData.socketID
+            const buyerSocketData = await UserCredential.findOne({
+                username:buyer
+            })
+            const buyerSocketID = buyerSocketData.socketID;
+            socket.to(buyerSocketID).emit("newMessage",{buyer:buyer,seller:seller,content:message,sender:sender})
+            socket.to(sellerSocketID).emit("newMessage",{buyer:buyer,seller:seller,content:message,sender:sender})
+        }
+        else{
+            console.log("ERROR ERROR ERROR")
+        }
+
+
+
+
         let conversation = await Conversation.findOne({
             participant:{ $all: [buyer,seller]},
         });
@@ -303,7 +344,6 @@ io.on("connection", (socket) =>{
             });
         }
 
-        socket.broadcast.emit("newMessage",{buyer:buyer,seller:seller,content:message,sender:sender})
 
         conversation.message.push({
             buyer:buyer,
@@ -314,9 +354,6 @@ io.on("connection", (socket) =>{
 
         await conversation.save();
         
-        console.log("Conversation updated:",conversation    )
-
-        console.log("message from buyer " + buyer + "to seller " + seller + " is " + message);
     })
 })
 
@@ -330,7 +367,6 @@ app.get("/prevMessage", async (req,res) =>{
     else{
         var seller = req.cookies.username;
         var buyer = req.query.buyer
-        console.log(req.query.buyer + "IDK")
     }
 
     try{
@@ -342,7 +378,6 @@ app.get("/prevMessage", async (req,res) =>{
         
         }
         else{
-            console.log(conversation)
             res.json("You Have No Message Yet!")
         }
     }

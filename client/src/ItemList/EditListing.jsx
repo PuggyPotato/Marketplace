@@ -41,7 +41,7 @@ function EditListing(){
     function handleSubmit(e){
         e.preventDefault();
             fetch(`http://localhost:3000/editListing?productID=${productID}`,{
-                method: "POST",
+                method: "PUT",
                 headers:{
                     "Content-Type":"application/json"
                 },
