@@ -293,11 +293,19 @@ io.on("connection", (socket) =>{
             {username:username},
             {$set : {socketID:socket.id}},
             {new:true})
-    
+        socket.data.username = username;
     })
+
 
     socket.on("messageDetails", async ({buyer,seller,message,sender}) =>{
         console.log("TEST!")
+
+
+        const senderSocketData = await UserCredential.findOne({
+            username:sender
+        })
+        const senderSocketID = senderSocketData.socketID;
+
         if(sender == buyer){
             const buyerSocketData = await UserCredential.findOne({
                 username:buyer
@@ -354,7 +362,22 @@ io.on("connection", (socket) =>{
 
         await conversation.save();
         
+
+        
     })
+
+    socket.on("disconnect", async () =>{
+            socket.disconnect()
+            console.log(socket.id + "has disconnected")
+            console.log(socket.data.username)
+            await UserCredential.findOneAndUpdate(
+                { username: socket.data.username }, // Condition to find the offer
+                { $set: { socketID: ""} }, // Update the status field
+                
+            )
+    
+        })
+
 })
 
 //Retrieve Previous Message from the DB

@@ -49,7 +49,7 @@ function MessageContainer(){
     }
 
     useEffect(() =>{
-    
+        
         if(sender){
             socket.current = io("http://localhost:3000");
             console.log("socket initialised")
@@ -68,7 +68,7 @@ function MessageContainer(){
         }
 
         return() =>{
-            socket.current.disconnect();
+            socket.current.disconnect("");
         }
     },[prevMessage])
 
