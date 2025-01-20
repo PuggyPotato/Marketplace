@@ -8,6 +8,7 @@ function CheckMessages(){
 
     const [messages,setMessages] = useState([])
     const [isBuyer,setIsBuyer] = useState(false)
+    const messageAPI = import.meta.env.VITE_checkMessage;
 
     const username = document.cookie
         .split('; ')
@@ -18,7 +19,7 @@ function CheckMessages(){
     useEffect(() =>{
 
 
-        fetch(`http://localhost:3000/checkMessages/`,{
+        fetch(messageAPI,{
             method:"GET",
             credentials: "include"
         })

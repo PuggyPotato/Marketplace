@@ -12,6 +12,7 @@ function MessageContainer(){
     const [prevMessage,setPrevMessage] = useState("")
     
     const navigate = useNavigate();
+    const PORT = import.meta.env.PORT;
 
     const socket = useRef(null);
     
@@ -51,7 +52,7 @@ function MessageContainer(){
     useEffect(() =>{
         
         if(sender){
-            socket.current = io("http://localhost:3000");
+            socket.current = io(PORT);
             console.log("socket initialised")
             socket.current.emit("userOnline",sender)
             socket.current.on("newMessage", (newMessage) =>{
