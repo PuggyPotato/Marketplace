@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import {io} from "socket.io-client"
-import {useNavigate} from "react-router-dom"
+import {data, useFetcher, useNavigate} from "react-router-dom"
 import Message from "./Message"
 
 
@@ -10,9 +10,10 @@ function MessageContainer(){
 
     const [message,setMessage] = useState("")
     const [prevMessage,setPrevMessage] = useState("")
+    const [otherOnline,setOtherOnline] = useState("")
     
     const navigate = useNavigate();
-    const PORT = import.meta.env.PORT;
+    const PORT = import.meta.env.VITE_PORT;
 
     const socket = useRef(null);
     
@@ -41,18 +42,38 @@ function MessageContainer(){
             .find(row => row.startsWith('username='))
             ?.split('=')[1];
     }
+    
 
-    if(buyer == sender){
-        var senderRole = "buyer"
-    }
-    else if(seller == sender){
-        var senderRole = "seller"
-    }
+    useEffect(() =>{
+        const otherPerson = urlParams.get("seller") || urlParams.get("buyer")
+        fetch(`http://localhost:3000/checkOtherOnline?otherPerson=${otherPerson}`,{
+            method:"GET",
+            credentials:"include"
+        })
+        .then(response =>{
+            if(!response.ok){
+                throw new Error("Network response was not ok")
+            }
+            return response.json();
+        })
+        .then(data =>{
+             if(data == ""){
+                setOtherOnline(false);
+             }
+             else if(data != ""){
+                setOtherOnline(true);
+             }
+             console.log("data is",data)
+            })
+            
+        .catch(error => console.log(error))
+    },[])
 
     useEffect(() =>{
         
         if(sender){
             socket.current = io(PORT);
+            console.log(PORT)
             console.log("socket initialised")
             socket.current.emit("userOnline",sender)
             socket.current.on("newMessage", (newMessage) =>{
@@ -94,7 +115,7 @@ function MessageContainer(){
             const sortedMessage = message.sort(
                 (a,b) => new Date(a.timestamp) - new Date(b.timestamp)
             ); 
-            console.log(sortedMessage)
+            console.log("sorted",sortedMessage)
             setPrevMessage(sortedMessage)
             })
         .catch(error => console.log("Error Encountered:",error))
@@ -152,6 +173,8 @@ function MessageContainer(){
                             <button type="submit">Send Message</button>
                     </form>
                     <div>
+                        {otherOnline ? (<h1>User Is Online</h1>) :(<h1>User Is Offline</h1>) }
+                    
                         {!prevMessage.length > 0 ? (
                             <></>
                         ):

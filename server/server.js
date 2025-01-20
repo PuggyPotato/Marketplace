@@ -358,6 +358,7 @@ io.on("connection", (socket) =>{
             seller:seller,
             content:message,
             sender:sender,
+            
         })
 
         await conversation.save();
@@ -366,8 +367,7 @@ io.on("connection", (socket) =>{
         
     })
 
-    socket.on("disconnect", async () =>{
-            socket.disconnect()
+    socket.on("disconnect", async (reason) =>{
             console.log(socket.id + "has disconnected")
             console.log(socket.data.username)
             await UserCredential.findOneAndUpdate(
@@ -420,6 +420,20 @@ app.get("/checkMessages",async (req,res) =>{
     }
     catch(error){
         console.log("Encountered Error:",error)
+    }
+})
+
+//Fetch Other Socket To Know If It's Online
+app.get("/checkOtherOnline", async (req,res) =>{
+    try{
+        const otherPerson = req.query.otherPerson
+        const userData = await UserCredential.findOne({
+            username:otherPerson
+        })
+        res.status(200).json(userData.socketID)
+    }
+    catch(error){
+        res.status(401).json("Something failed")
     }
 })
 
