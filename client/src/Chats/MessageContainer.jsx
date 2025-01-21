@@ -97,7 +97,7 @@ function MessageContainer(){
     //Fetch previous message from db
     useEffect(() =>{
         //Sending Seller As Query if User is Buyer
-        if(seller){
+        if(seller != sender){
         fetch(`http://localhost:3000/prevMessage?seller=${seller}`, {
             method:"GET",
             credentials:"include",
@@ -122,7 +122,7 @@ function MessageContainer(){
         }
 
         //Sending buyer As Query If User is Seller
-        else if(buyer){
+        else if(buyer != sender){
             fetch(`http://localhost:3000/prevMessage?buyer=${buyer}`, {
                 method:"GET",
                 credentials:"include",

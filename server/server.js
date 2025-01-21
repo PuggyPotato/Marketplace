@@ -341,12 +341,13 @@ io.on("connection", (socket) =>{
 
 
 
-
         let conversation = await Conversation.findOne({
             $or: [
-                {"participant.buyer":buyer},
-                {"participant.seller":seller}],
-        })
+                { [`participant.0`]: socket.data.username }, // Check if username matches participant[0]
+                { [`participant.1`]: socket.data.username }  // Check if username matches participant[1]
+            ]
+        });
+        
 
         if(!conversation){
 
@@ -389,19 +390,22 @@ io.on("connection", (socket) =>{
 
 //Retrieve Previous Message from the DB
 app.get("/prevMessage", async (req,res) =>{
-    
-    if(req.query.seller && req.query.seller !== "null"){
-        var buyer = req.cookies.username 
-        var seller = req.query.seller;
-    }
-    else{
-        var seller = req.cookies.username;
-        var buyer = req.query.buyer
-    }
 
     try{
+        if(req.query.seller && req.query.seller !== "null"){
+            console.log("seller",req.query.seller,"buyer",req.cookies.username)
+            var buyer = req.cookies.username 
+            var seller = req.query.seller;
+            console.log("seller",seller,"buyer",buyer)
+        }
+        else{
+            var seller = req.cookies.username;
+            var buyer = req.query.buyer
+            console.log("seller",seller,"buyer",buyer)
+        }
         const conversation = await Conversation.findOne({
-            participant: {$all:[buyer,seller]}
+            buyer:buyer,
+            seller:seller
         })
         if(conversation){
         res.json(conversation.message)
