@@ -343,8 +343,10 @@ io.on("connection", (socket) =>{
 
 
         let conversation = await Conversation.findOne({
-            participant:{ $all: [buyer,seller]},
-        });
+            $or: [
+                {"participant.buyer":buyer},
+                {"participant.seller":seller}],
+        })
 
         if(!conversation){
 
@@ -355,6 +357,7 @@ io.on("connection", (socket) =>{
                 message:[]
             });
         }
+
 
 
         conversation.message.push({
