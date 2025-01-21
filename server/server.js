@@ -269,6 +269,8 @@ const io = new Server(server, {cors:true})
 
 const conversationSchema = new mongoose.Schema({
     participant : [String],
+    buyer :String,
+    seller:String,
     message :[
         {
             buyer:String,
@@ -347,6 +349,8 @@ io.on("connection", (socket) =>{
         if(!conversation){
 
             conversation = new Conversation({
+                buyer:buyer,
+                seller:seller,
                 participant: [buyer,seller],
                 message:[]
             });
@@ -416,7 +420,7 @@ app.get("/checkMessages",async (req,res) =>{
         let conversation = await Conversation.find({
             participant: {$all:[user]}
         })
-        res.json(conversation.map(convo => convo.message))
+        res.json(conversation.map(convo => convo))
     }
     catch(error){
         console.log("Encountered Error:",error)
