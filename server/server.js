@@ -413,10 +413,10 @@ app.get("/checkMessages",async (req,res) =>{
     const user = req.cookies.username;
 
     try{
-        let conversation = await Conversation.findOne({
+        let conversation = await Conversation.find({
             participant: {$all:[user]}
         })
-        res.json(conversation.message)
+        res.json(conversation.map(convo => convo.message))
     }
     catch(error){
         console.log("Encountered Error:",error)

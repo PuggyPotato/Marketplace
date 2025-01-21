@@ -41,8 +41,8 @@ function CheckMessages(){
         <>
             <div>
                 {
-                    messages.length > 0 ? (
-                        messages.map((item,key) =>(
+                    messages.flat().length > 0 ? (
+                        messages.flat().map((item,key) =>(
                            <MessageBar  OtherPerson={username == item.buyer ? item.seller : item.buyer}
                                         isBuyer={username == item.buyer}
                                         key={key}/>
