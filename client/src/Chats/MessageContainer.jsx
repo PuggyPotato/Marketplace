@@ -46,6 +46,7 @@ function MessageContainer(){
 
     useEffect(() =>{
         const otherPerson = urlParams.get("seller") || urlParams.get("buyer")
+        console.log(otherPerson)
         fetch(`http://localhost:3000/checkOtherOnline?otherPerson=${otherPerson}`,{
             method:"GET",
             credentials:"include"
@@ -140,7 +141,7 @@ function MessageContainer(){
                 const sortedMessage = message.sort(
                     (a,b) => new Date(a.timestamp) - new Date(b.timestamp)
                 ); 
-                console.log(sortedMessage)
+                console.log("sortedhere",sortedMessage)
                 setPrevMessage(sortedMessage)
                 })
             .catch(error => console.log("Error Encountered:",error))

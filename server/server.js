@@ -302,13 +302,14 @@ io.on("connection", (socket) =>{
     socket.on("messageDetails", async ({buyer,seller,message,sender}) =>{
         console.log("TEST!")
 
-
         const senderSocketData = await UserCredential.findOne({
             username:sender
         })
         const senderSocketID = senderSocketData.socketID;
+        console.log("buyer",buyer,seller)
 
         if(sender == buyer){
+            
             const buyerSocketData = await UserCredential.findOne({
                 username:buyer
             });
@@ -340,14 +341,14 @@ io.on("connection", (socket) =>{
         }
 
 
-
         let conversation = await Conversation.findOne({
-            $or: [
-                { [`participant.0`]: socket.data.username }, // Check if username matches participant[0]
-                { [`participant.1`]: socket.data.username }  // Check if username matches participant[1]
+            $and: [
+                { [`participant.0`]: buyer }, // Check if username matches participant[0]
+                { [`participant.1`]: seller }  // Check if username matches participant[1]
             ]
         });
         
+        console.log("TEST",conversation)
 
         if(!conversation){
 
