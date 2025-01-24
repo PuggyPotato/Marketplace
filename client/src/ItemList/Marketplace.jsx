@@ -42,6 +42,7 @@ function Marketplace(){
     return(
         <>
             <div>
+                <label>Filter:</label><input/><button>Search</button>
               {
                 product.length > 0 ? (
                     <ul>
