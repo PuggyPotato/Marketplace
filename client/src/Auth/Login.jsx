@@ -48,9 +48,6 @@ function Login(){
         if(username === "" || password === ""){
             alert("Username Or Password cannnot be empty")
         }
-        else if(username.length < 8 || password.length < 8){
-            alert("Please Enter Username and Password with at least 8 character")
-        }
         else{
             fetch(LoginApi,{
                 method: "POST",

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 
@@ -15,12 +15,26 @@ function Register(){
     const RegisterApi = import.meta.env.VITE_RegisterApi
     const navigate = useNavigate();
 
+    useEffect(() =>{
+
+    },[
+
+        
+    ])
+
     function handleRegister(event){
         event.preventDefault();
         //Check If User Entered Empty
         if(username === "" || password === ""){
             alert("Username Or Password cannnot be empty")
         }
+        else if(username.length < 8 || password.length < 8){
+            alert("Please Enter Username and Password with at least 8 character")
+        }
+        else if(password == password.toUpperCase()){
+            alert("Password must have at least a upper case")
+        }
+
         else{
                 fetch(RegisterApi,{
                 method: "POST",
