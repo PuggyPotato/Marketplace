@@ -31,10 +31,9 @@ function Register(){
         else if(username.length < 8 || password.length < 8){
             alert("Please Enter Username and Password with at least 8 character")
         }
-        else if(password == password.toUpperCase()){
+        else if(!/[A-Z]/.test(password)){
             alert("Password must have at least a upper case")
         }
-
         else{
                 fetch(RegisterApi,{
                 method: "POST",

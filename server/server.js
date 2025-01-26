@@ -111,6 +111,8 @@ app.post("/listitem", async (req,res) =>{
 
 //Fetch Data from product to display in marketplace
 app.get("/products", async (req,res) =>{
+    const filterName = req.query.filterName;
+    console.log(filterName)
     let username;
     username = req.cookies.username;
     console.log(username)
@@ -119,12 +121,16 @@ app.get("/products", async (req,res) =>{
         const products = await ItemDetails.find({
             seller: {$ne :username}
         });
+
         res.json(products)
     }
     catch(error){
         res.status(500).json({error: "Error fetching products from db"})
     }
 })
+
+
+
 
 //Fetch Data for seller to edit
 app.get("/myProducts", async (req,res) =>{
