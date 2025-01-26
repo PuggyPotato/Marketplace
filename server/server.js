@@ -111,12 +111,8 @@ app.post("/listitem", async (req,res) =>{
 
 //Fetch Data from product to display in marketplace
 app.get("/products", async (req,res) =>{
-    const filterName = req.query.filterName;
-    console.log(filterName)
-    let username;
-    username = req.cookies.username;
-    console.log(username)
-    console.log(username)
+
+    let username = req.cookies.username;
     try{
         const products = await ItemDetails.find({
             seller: {$ne :username}
@@ -129,6 +125,39 @@ app.get("/products", async (req,res) =>{
     }
 })
 
+app.post("/filterProducts", async (req,res) =>{
+    const username = req.cookies.username; 
+    const filterName = req.query.filterName;
+    if(filterName == ""){
+        console.log("error")
+        return;
+    }
+    else if (filterName){
+        console.log(filterName)
+        try{
+            const products = await ItemDetails.find({
+            $and:[
+                    {seller: {$ne :username}},
+                {
+                    $or:[
+                        {productName:filterName},
+                        {productDescription:filterName},
+                        {seller : filterName},
+
+                        ]
+                }
+            ]
+            
+
+            });
+    
+            res.json(products)
+        }
+        catch(error){
+            res.status(500).json({error: "Error fetching products from db"})
+        }
+    }
+})
 
 
 

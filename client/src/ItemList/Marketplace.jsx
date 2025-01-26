@@ -38,12 +38,10 @@ function Marketplace(){
       
     },[])
 
-    const searchWithFilter = () =>{
-        fetch(`http://localhost:3000/products?filterName=${filterName}`,{
-            method:"GET",
-            headers:{
-                "Content-Type":"application/json"
-            },
+    const searchWithFilter = (e) =>{
+        e.preventDefault();
+        fetch(`http://localhost:3000/filterProducts?filterName=${filterName}`,{
+            method:"POST",
             credentials:"include"
         })
         .then(response =>{
