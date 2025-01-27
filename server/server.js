@@ -129,7 +129,16 @@ app.post("/filterProducts", async (req,res) =>{
     const username = req.cookies.username; 
     const filterName = req.query.filterName;
     if(filterName == ""){
-        console.log("error")
+        try{
+            const products = await ItemDetails.find({
+                seller: {$ne :username}
+            });
+    
+            res.json(products)
+        }
+        catch(error){
+            res.status(500).json({error: "Error fetching products from db"})
+        }
         return;
     }
     else if (filterName){

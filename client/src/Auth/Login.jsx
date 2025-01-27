@@ -85,13 +85,17 @@ function Login(){
 
     return(
         <>
-            <div>
-                <form onSubmit={handleLogin}>
-                    <h1>Login</h1>
-                    <label>Username: <input value={username} onChange={changeUsername}/></label>
-                    <label>Password: <input value={password} onChange={changePassword}/></label>
-                    <button type="button" onClick={() => navigate("/register")}>Go To Register</button>
-                    <button type="submit">Login</button>
+            <div className="flex items-center justify-center min-h-screen bg-gray-100">
+                <form onSubmit={handleLogin} className="bg-white shadow-lg rounded-xl p-8 w-96 border">
+                    <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
+                    <label className="block text-gray-700 font-medium mb-1">Username: 
+                        <input value={username} onChange={changeUsername} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+                    </label>
+                    <label className="block text-gray-700 font-medium mb-1">Password: 
+                        <input value={password} onChange={changePassword} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+                    </label>
+                    <button type="button" onClick={() => navigate("/register")} className="text-blue-500 hover:underline">Go To Register</button>
+                    <button type="submit" className="bg-blue-500 text-white ml-32 mt-8 px-4 py-2 rounded-lg hover:bg-blue-600 transition hover:cursor-pointer">Login</button>
                 </form>
             </div>
         </>

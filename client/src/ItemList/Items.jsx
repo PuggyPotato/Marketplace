@@ -66,13 +66,13 @@ function Items({productName,productImage,productPrice,seller,productID}){
 
     return(
         <>
-            <div>
-                <h3>Product Name:{productName}</h3>
-                <img src={productImage} style={{width:"100px",height:"100px"}} alt="image is here"></img>
-                <h4>Price:{productPrice}$</h4>
-                <h5>Sold by {seller}</h5>
-                <button onClick={chatWithSeller}>Chat With Seller</button>
-                <button onClick={makeOffer}>Make An Offer</button>
+            <div className="border-2 w-60 h-100 p-2">
+                <h3 className="text-2xl text-center">{productName}</h3>
+                <img src={productImage} className="w-55 h-48 " alt="image is here"></img>
+                <h4 className="text-2xl pb-2">Price:{productPrice}$</h4>
+                <h5 className="text-2xl">Seller:{seller}</h5>
+                <button onClick={chatWithSeller} className="w-25 h-10 border-2 absolute top-10 relative rounded text-sm" >Chat With Seller</button>
+                <button onClick={makeOffer} className="w-25 h-10 border-2 absolute top-7.5 left-5 relative rounded text-sm">Make An Offer</button>
             </div>
         </>
     )

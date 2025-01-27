@@ -1,5 +1,6 @@
 import Items from "./Items"
 import { useEffect, useState } from "react"
+import Home from "../Home"
 
 
 
@@ -63,11 +64,12 @@ function Marketplace(){
 
     return(
         <>
-            <div>
+            <Home/>
+            <div className="absolute  top-20 left-40">
                 <label>Filter:</label><input onChange={(e) =>setFilterName(e.target.value)} value={filterName}/><button onClick={searchWithFilter}>Search</button>
               {
                 product.length > 0 ? (
-                    <ul>
+                    <ul className="grid grid-cols-6 gap-50">
                         {product.map((item,key) =>{
                           return( 
                           <Items key={key}
