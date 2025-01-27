@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-function Items({productName,productImage,productPrice,seller,productID}){
+function Items({productName,productImage,productPrice,seller,productID,productDescription}){
     const navigate = useNavigate();
     const makeOfferAPI = import.meta.env.VITE_makeOfferAPI
     

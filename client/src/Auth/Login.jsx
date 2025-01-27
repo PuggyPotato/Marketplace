@@ -25,9 +25,6 @@ function Login(){
         navigate("/")
     }
 
-    
-
-    
     },[])
 
     const [username,setUsername] = useState("");
@@ -82,6 +79,17 @@ function Login(){
             })
         }}
 
+        function showPassword(){
+            const checkBox = document.getElementById("checkBox");
+            const password = document.getElementById("password");
+
+            if(checkBox.checked){
+                password.type = "text"
+            }
+            else{
+                password.type ="password"
+            }
+        }
 
     return(
         <>
@@ -92,8 +100,10 @@ function Login(){
                         <input value={username} onChange={changeUsername} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
                     </label>
                     <label className="block text-gray-700 font-medium mb-1">Password: 
-                        <input value={password} onChange={changePassword} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+                        <input value={password} onChange={changePassword} id="password" type="password" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
                     </label>
+                    <input type="checkbox" onClick={showPassword} id="checkBox"></input><label>Show Password</label>
+                    <br></br>
                     <button type="button" onClick={() => navigate("/register")} className="text-blue-500 hover:underline">Go To Register</button>
                     <button type="submit" className="bg-blue-500 text-white ml-32 mt-8 px-4 py-2 rounded-lg hover:bg-blue-600 transition hover:cursor-pointer">Login</button>
                 </form>
