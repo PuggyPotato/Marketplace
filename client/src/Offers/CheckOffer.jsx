@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import OffersForSeller from "./OffersForSeller"
+import Home from "../Home";
 
 
 
@@ -40,24 +41,31 @@ function CheckOffer(){
 
     return(
         <>
-            <div>
-                {offers.length > 0 ?(
-                    <ul>
-                        {offers.map((item,key) =>{
-                            return(
-                                <OffersForSeller key={key}
-                                        productName={item.productName}
-                                        buyer={item.buyer}
-                                        offerPrice={item.offerPrice}
-                                        status={item.status}
-                                        productID={item._id}
-                                        updateStatus={updateStatus}
-                                        />
-                            )
-                        })}
+            <Home/>
+            <div className="absolute top-20 left-40">
+                <h1 className="text-center text-4xl font-mono ">Offers</h1>
+                {offers.length > 0 ? (
+                    <ul className="text-xl grid grid-cols-4 grid-row-10 gap-x-5 gap-y-5">
+                        {offers.map((item, key) => (
+                            <li
+                                key={key}
+                                className=""
+                            >
+                                <OffersForSeller className
+                                    productName={item.productName}
+                                    buyer={item.buyer}
+                                    offerPrice={item.offerPrice}
+                                    status={item.status}
+                                    productID={item._id}
+                                    updateStatus={updateStatus}
+                                />
+                            </li>
+                        ))}
                     </ul>
-                ):(
-                    <h1>There Are No Offer Available</h1>
+                ) : (
+                    <h1 className="text-center text-purple-800 text-3xl font-bold py-12 animate-pulse">
+                        🌟 No Offers Available Yet
+                    </h1>
                 )}
             </div>
         </>

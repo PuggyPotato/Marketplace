@@ -14,6 +14,7 @@ const { type } = require("os");
 const PORT = process.env.PORT;
 const MONGOURL = process.env.MONGOURL;
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+const defaultProfilePicture = process.env.defaultProfilePictureInBase64
 
 const corsOptions = {
     origin: ['http://localhost:5173',"http://localhost:5174","http://localhost:5175"], // Allow requests from the frontend domain
@@ -29,7 +30,8 @@ mongoose.connect(MONGOURL)
 const UserCredentialSchema = new  mongoose.Schema({
     username:String,
     password:String,
-    socketID:String
+    socketID:String,
+    profilePicture:String
 })
 
 const UserCredential = mongoose.model("UserCredential", UserCredentialSchema)
@@ -38,12 +40,11 @@ const UserCredential = mongoose.model("UserCredential", UserCredentialSchema)
 //Register Handling
 app.post("/register",async (req,res) =>{
     let {username,password} = req.body;
-
             try{
                 const salt = await bcrypt.genSalt(10);
                 const hash = await bcrypt.hash(password,salt)
 
-                const userCredential = new UserCredential({username:username,password:hash});
+                const userCredential = new UserCredential({username:username,password:hash,profilePicture:defaultProfilePicture});
 
                 await userCredential.save()
                 res.status(200).send("Data Saved Succesfully");

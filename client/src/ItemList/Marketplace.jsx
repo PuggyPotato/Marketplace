@@ -65,13 +65,13 @@ function Marketplace(){
     return(
         <>
             <Home/>
-            <div className="absolute  top-20 left-40">
-                <label className="text-gray-700 font-bold text-xl mb-1">Filter:</label>
-                    <input onChange={(e) =>setFilterName(e.target.value)} value={filterName} className="w-50 my-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
-                <button onClick={searchWithFilter} className="bg-blue-500 text-white ml-5 px-2 py-1 w-30 rounded-lg hover:bg-blue-600 transition hover:cursor-pointer">Search</button>
+            <div className="absolute top-20 left-40">
+                <label className="text-white font-bold text-md mb-1 mr-2">Filter:</label>
+                    <input onChange={(e) =>setFilterName(e.target.value)} value={filterName} className="w-50 mb-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+                <button onClick={searchWithFilter} className="bg-blue-500 text-white ml-5 px-1 w-30 rounded-lg hover:bg-blue-600 transition hover:cursor-pointer">Search</button>
               {
                 product.length > 0 ? (
-                    <ul className="grid grid-cols-6 gap-65">
+                    <ul className="grid grid-cols-5 grid-rows-10 gap-x-8 gap-y-2">
                         {product.map((item,key) =>{
                           return( 
                           <Items  className="" key={key}

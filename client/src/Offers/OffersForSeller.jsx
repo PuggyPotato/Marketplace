@@ -63,7 +63,7 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus,produ
 
     return(
         <>
-            <div>
+            <div className="w-80 h-80 border-2">
                 <h2>Product Name:{productName}</h2>
                 <h3>Interested Buyer:{buyer}</h3>
                 <h3>Their Offer:{offerPrice}</h3>
@@ -74,8 +74,8 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus,produ
                     </>
                 ):(
                     <>
-                        <button onClick={rejectOffer} type="button">Reject Offer</button>
-                        <button onClick={acceptOffer} type="button">Accept Offer</button>
+                        <button onClick={rejectOffer} type="button" className="border-2">Reject Offer</button>
+                        <button onClick={acceptOffer} type="button" className="border-2 relative right-0">Accept Offer</button>
                         
                     </>
                 )}

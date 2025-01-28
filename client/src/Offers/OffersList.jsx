@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react"
 import OffersForBuyer from "./OffersForBuyer"
+import Home from "../Home"
 
 
 
@@ -31,6 +32,7 @@ function OffersList(){
 
     return(
         <>
+            <Home/>
             <div>
             {offers.length > 0 ?(
                     <ul>

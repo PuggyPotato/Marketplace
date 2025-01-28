@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import OwnListingsEditable from "./OwnListings"
+import Home from "../Home"
 
 
 
@@ -40,7 +41,8 @@ function CheckOwnListing(){
 
     return(
         <>
-            <div>
+            <Home/>
+            <div className="absolute top-20 left-40">
               {
                 product.length > 0 ? (
                     <ul>

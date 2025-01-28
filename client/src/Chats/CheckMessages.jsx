@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import MessageBar from "./MessageBar"
-
+import Home from "../Home"
 
 
 
@@ -39,7 +39,10 @@ function CheckMessages(){
 
     return(
         <>
-            <div>
+            <Home/>
+            <div className="absolute top-15 left-35">
+                <div className="border-2 ml-50  h-[870px] absolute "></div>
+
                 {
                     messages.length > 0 ? (
                         messages.map((item,key) =>(

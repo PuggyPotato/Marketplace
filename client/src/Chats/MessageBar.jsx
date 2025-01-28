@@ -22,8 +22,9 @@ function MessageBar({OtherPerson,isBuyer}){
 
     return(
         <>
-            <div>
-                <button onClick={() => navigate(navigationLink)}>Your message with {OtherPerson} as {isBuyer ? "Buyer" : "Seller" }</button>
+            <div className="border-2 w-50 h-20 pl-0">
+                <button onClick={() => navigate(navigationLink)}>
+                    <img></img>{OtherPerson}{"("}{isBuyer ? "Buyer" : "Seller" }{")"}</button>
             </div>
         </>
     )

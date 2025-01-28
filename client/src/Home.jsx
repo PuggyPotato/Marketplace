@@ -51,8 +51,9 @@ function Home(){
     return(
         <>
             <div className="w-30 flex" >
-                <div className="border-2 ml-35  h-screen absolute"></div>
+                <div className="border-2 ml-35  h-[870px] absolute"></div>
                 <div className="border-2 mt-15 w-screen absolute"></div>
+                <div></div>
                 <div className="gap-y-4 flex flex-col w-75 justify-center " >
                     <button className="text-2xl">Potato Market</button>
                     {!loggedIn? (<button onClick={() => navigate("/login")} className="border-2 bg-red-700 w-32 h-12 rounded-md text-sm absolute right-3 top-2">Go To Login</button>):

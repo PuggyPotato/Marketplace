@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import {io} from "socket.io-client"
 import {data, useFetcher, useNavigate} from "react-router-dom"
 import Message from "./Message"
+import Home from "../Home"
 
 
 
@@ -166,6 +167,7 @@ function MessageContainer(){
 
         return(
             <>
+                <Home/>
                 <div>
                     <form onSubmit={sendMessage}>
                         <label>Enter Message Here:
