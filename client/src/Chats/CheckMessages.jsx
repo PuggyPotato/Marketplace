@@ -9,6 +9,7 @@ function CheckMessages(){
     const [messages,setMessages] = useState([])
     const [isBuyer,setIsBuyer] = useState(false)
     const messageAPI = import.meta.env.VITE_checkMessage;
+    const [otherOnline,setOtherOnline] = useState("")
 
     const username = document.cookie
         .split('; ')
@@ -35,6 +36,58 @@ function CheckMessages(){
         .catch(error =>console.log(error))
 
 
+    },[])
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const sender = document.cookie
+        .split('; ')
+            .find(row => row.startsWith('username='))
+            ?.split('=')[1];
+            
+    if(urlParams.get("seller")){
+        var seller = urlParams.get("seller");
+    }
+    else{
+        var seller = document.cookie
+        .split('; ')
+            .find(row => row.startsWith('username='))
+            ?.split('=')[1];
+
+    };
+    if(urlParams.get("buyer")){
+        var buyer = urlParams.get("buyer")
+    }
+    else{
+        var buyer = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('username='))
+            ?.split('=')[1];
+    }
+
+    useEffect(() =>{
+        const otherPerson = urlParams.get("seller") || urlParams.get("buyer")
+        console.log(otherPerson)
+        fetch(`http://localhost:3000/checkOtherOnline?otherPerson=${otherPerson}`,{
+            method:"GET",
+            credentials:"include"
+        })
+        .then(response =>{
+            if(!response.ok){
+                throw new Error("Network response was not ok")
+            }
+            return response.json();
+        })
+        .then(data =>{
+             if(data == ""){
+                setOtherOnline(false);
+             }
+             else if(data != ""){
+                setOtherOnline(true);
+             }
+             console.log("data is",data)
+            })
+            
+        .catch(error => console.log(error))
     },[])
 
     return(

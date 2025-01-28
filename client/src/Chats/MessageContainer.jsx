@@ -3,6 +3,7 @@ import {io} from "socket.io-client"
 import {data, useFetcher, useNavigate} from "react-router-dom"
 import Message from "./Message"
 import Home from "../Home"
+import CheckMessages from "./CheckMessages"
 
 
 
@@ -43,33 +44,7 @@ function MessageContainer(){
             .find(row => row.startsWith('username='))
             ?.split('=')[1];
     }
-    
 
-    useEffect(() =>{
-        const otherPerson = urlParams.get("seller") || urlParams.get("buyer")
-        console.log(otherPerson)
-        fetch(`http://localhost:3000/checkOtherOnline?otherPerson=${otherPerson}`,{
-            method:"GET",
-            credentials:"include"
-        })
-        .then(response =>{
-            if(!response.ok){
-                throw new Error("Network response was not ok")
-            }
-            return response.json();
-        })
-        .then(data =>{
-             if(data == ""){
-                setOtherOnline(false);
-             }
-             else if(data != ""){
-                setOtherOnline(true);
-             }
-             console.log("data is",data)
-            })
-            
-        .catch(error => console.log(error))
-    },[])
 
     useEffect(() =>{
         
@@ -167,8 +142,8 @@ function MessageContainer(){
 
         return(
             <>
-                <Home/>
-                <div>
+                <CheckMessages/>
+                <div className="absolute top-15 left-90">
                     <form onSubmit={sendMessage}>
                         <label>Enter Message Here:
                             <input value={message} onChange={(e) =>setMessage(e.target.value)}/>

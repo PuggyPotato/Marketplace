@@ -33,9 +33,10 @@ function OffersList(){
     return(
         <>
             <Home/>
-            <div>
+            <div className="absolute top-20 left-40"> 
+            <h1 className="text-center text-4xl font-mono ">Offers</h1>
             {offers.length > 0 ?(
-                    <ul>
+                    <ul className="text-xl grid grid-cols-4 grid-row-10 gap-x-5 gap-y-5">
                         {offers.map((item,key) =>{
                             return(
                                 <OffersForBuyer key={key}
