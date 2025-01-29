@@ -124,7 +124,7 @@ function MessageContainer(){
             
         }
         
-    },[])
+    },[buyer,seller])
 
 
     function sendMessage(event){

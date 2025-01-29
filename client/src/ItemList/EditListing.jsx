@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom";
-
+import Home from "../Home";
 
 
 
@@ -112,23 +112,25 @@ function EditListing(){
 
     return(
         <>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <h1><img src={productImage}></img></h1>
-                    <h1>Product Name:
-                        <textarea value={productName} onChange={(e) => setProductName(e.target.value)}/>
+            <Home/>
+            <div className="absolute  top-0">
+                <form onSubmit={handleSubmit} className="border-2 top-35 left-130 h-150 w-150 absolute gap-y-2 bg-cyan-500">
+                    <h1 className="text-2xl text-center p-2">Edit Listing</h1>
+                    <img className="text-xl ml-50 w-50 h-50" src={productImage}></img>
+                    <h1 className="text-xl ml-20 ">Product Name:
+                        <textarea className="ml-16.5 p-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" value={productName} onChange={(e) => setProductName(e.target.value)}/>
                     </h1>
-                    <h3>Product Description:
-                        <textarea value={productDescription} onChange={(e) =>setProductDescription(e.target.value)}/>
+                    <h3 className="text-xl ml-20">Product Description:
+                        <textarea className="ml-5 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" value={productDescription} onChange={(e) =>setProductDescription(e.target.value)}/>
                     </h3>
-                    <p>Product Price:
-                        <textarea value={productPrice} onChange={(e) =>setProductPrice(e.target.value)}/>
+                    <p className="text-xl ml-20 mb-2 pt-[-10px]">Product Price:
+                        <textarea className="ml-20 w-54 text-sm m-0 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" value={productPrice} onChange={(e) =>setProductPrice(e.target.value)}/>
                     </p>
                     
-                    <label>Change your Image:</label>
-                    <input type="file" accept=".png,.jpg" onChange={handleImageChange}></input><br/>
-                    <button type="button" onClick={deleteListing}>Delete Listing</button>
-                    <button type="submit">Save Changes</button>
+                    <label className="text-2xl ml-20">Change your Image:</label>
+                    <input type="file" accept=".png,.jpg" onChange={handleImageChange} className=" pl-5 w-73 px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer hover:bg-blue-600"></input><br/>
+                    <button type="button" className="w-20 h-12 border-2 absolute bottom-3 left-5 bg-red-800 pb-4 rounded text-sm" onClick={deleteListing}>Delete Listing</button>
+                    <button type="submit" className="w-20 h-12 border-2 absolute bottom-3 right-5 bg-green-700 pb-2 rounded text-sm">Save Changes</button>
                    
                 </form>
             </div>

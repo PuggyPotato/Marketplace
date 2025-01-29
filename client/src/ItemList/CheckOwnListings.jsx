@@ -45,7 +45,7 @@ function CheckOwnListing(){
             <div className="absolute top-20 left-40">
               {
                 product.length > 0 ? (
-                    <ul>
+                    <ul className="grid grid-cols-5 grid-rows-10 gap-x-8 gap-y-2">
                         {product.map((item,key) =>{
                           return( 
                           <OwnListingsEditable key={key}

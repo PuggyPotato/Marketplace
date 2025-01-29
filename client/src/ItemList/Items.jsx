@@ -32,7 +32,7 @@ function Items({productName,productImage,productPrice,seller,productID,productDe
         }
         else{
             offerPrice = window.prompt("How Much Are You Offering?($)");
-            if(offerPrice != "" || offerPrice <= 0){
+            if(offerPrice != "" && offerPrice > 0 && offerPrice != null){
                 fetch(makeOfferAPI, {
                     method: "POST",
                     headers:{
