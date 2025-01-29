@@ -74,8 +74,8 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus,produ
                     </>
                 ):(
                     <>
-                        <button onClick={rejectOffer} type="button" className="border-2">Reject Offer</button>
-                        <button onClick={acceptOffer} type="button" className="border-2 relative right-0">Accept Offer</button>
+                        <button onClick={rejectOffer} type="button" className="border-2 absolute relative top-35 left-4  rounded-lg hover:bg-red-600 transition hover:cursor-pointer bg-red-500 p-1">Reject Offer</button>
+                        <button onClick={acceptOffer} type="button" className="border-2 absolute relative top-35 left-16 rounded-lg hover:bg-blue-600 transition hover:cursor-pointer bg-blue-500 p-1">Accept Offer</button>
                         
                     </>
                 )}

@@ -55,6 +55,7 @@ function EditListing(){
             })
             .then(data =>{
                 console.log("Success:",data);
+                alert("Sucesfully Updated!")
                 navigate("/checkListings");
             })
             .catch(error =>{
