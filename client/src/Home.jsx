@@ -63,7 +63,7 @@ function Home(){
                     <button onClick={() => navigate("/checkoffer")} className=" border-2 bg-red-700 w-24 h-12 rounded-md">Check Offer</button>
                     <button onClick={() => navigate("/offerlist")} className=" border-2 bg-red-700 w-32 h-12 rounded-md">Check Outgoing Offer</button>
                     <button onClick={() => navigate("/checkMessages")} className=" border-2 bg-red-700 w-24 h-12 rounded-md">Check Messages</button>
-                    <button onClick={() => navigate("/checkListings")} className=" border-2 w-32 h-12 rounded-md">Check Own Listings</button>
+                    <button onClick={() => navigate("/checkListings")} className=" border-2 w-32 h-12 rounded-md bg-red-700">Check Own Listings</button>
                     <h1 className="font-mono text-3xl absolute ml-40 top-3">Welcome {username}</h1>
                 </div>
             </div>
