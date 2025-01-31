@@ -63,11 +63,14 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus,produ
 
     return(
         <>
-            <div className="w-80 h-80 border-2">
-                <h2>Product Name:{productName}</h2>
-                <h3>Interested Buyer:{buyer}</h3>
-                <h3>Their Offer:{offerPrice}</h3>
-                <p>Offer Status:{status}</p>
+            <div className="w-80 h-80 border-2 p-5">
+                <h2 className="text-2xl p-3">Product Name:{productName}</h2>
+                <h3 className="text-2xl p-3">Interested Buyer:{buyer}</h3>
+                <h3 className="text-2xl p-3">Their Offer:{offerPrice}</h3>
+                {status == "Offer Accepted" ? (
+                    <p className="bg-green-600 p-3 rounded">Offer Status:{status}</p>): 
+                    status =="pending" ? (<p className="bg-yellow-600 p-3 rounded">Offer Status:{status}</p>):
+                    <p className="bg-red-600 p-3 rounded">Offer Status:{status}</p>}
                 {status !== "pending" ? (
                     <>
 
@@ -79,6 +82,7 @@ function OffersForSeller({productName,buyer,offerPrice,status,updateStatus,produ
                         
                     </>
                 )}
+                
                 
             </div>
         </>
