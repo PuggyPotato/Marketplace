@@ -14,16 +14,21 @@ function MessageContainer(){
     const [prevMessage,setPrevMessage] = useState("")
     const [otherOnline,setOtherOnline] = useState("")
 
-    //Point To Last Message when sending messages
-    const chatContainerRef = useRef(null); // Reference for the chat container
+  // Create a ref for the message container
+  const messagesEndRef = useRef(null);
 
+  // Function to scroll to bottom
+  const scrollToBottom = () => {
+    const messageContainer = document.querySelector('.message-container'); // Add this class to your container
+    if (messageContainer) {
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+};
+
+  // Auto scroll when messages change or component mounts
   useEffect(() => {
-    // Scroll to the bottom of the chat container when it first loads and on updates
-    chatContainerRef.current?.scrollTo({
-      top: chatContainerRef.current.scrollHeight, // Scroll to the bottom
-      behavior: 'smooth', // Smooth scroll effect
-    });
-  }, [prevMessage]); // Trigger scroll when `prevMessage` changes
+      scrollToBottom();
+  }, [prevMessage]); // Will trigger when messages update
     
     const navigate = useNavigate();
     const PORT = import.meta.env.VITE_PORT;
@@ -164,26 +169,34 @@ function MessageContainer(){
                         
                             
                     </form>
-                    <div className=" overflow-hidden overflow-y-scroll overflow-y-auto max-h-135 max-w-[1175px] w-[1175px] mt-2">
+                    <div className=" overflow-hidden overflow-y-scroll overflow-y-auto max-h-135 max-w-[1175px] w-[1175px] mt-2 message-container">
                         {otherOnline ? (<h1>User Is Online</h1>) :(<h1>User Is Offline</h1>) }
                     
                         {!prevMessage.length > 0 ? (
                             <></>
                         ):
-                        (<ul>
+                        (<ul className="">
                             {prevMessage.map((item,key) =>(
-                                <div className={`flex p-2 rounded-lg my-5 flex-col-reverse max-w-[30%] ${
-                                    item.sender === sender ? "bg-blue-400 text-white relative left-200 self-end " : "bg-yellow-600 text-black self-start"
+                                
+                                <div key={key} className={`flex ${
+                                    item.sender === sender ? "justify-end mr-2" : "justify-start"
+                                }`}>
+
+                                <div className={`p-3 rounded-lg max-w-[300px]  my-2 ${
+                                    item.sender === sender ? "bg-blue-400 text-white  " : "bg-yellow-600 text-black"
                     
                                 }`}>
                                 <Message Sender={item.sender} MessageFromSender={item.content} key={key}
                                 
-                            /></div>
+                            /></div></div>
                             ))}
                             </ul>
                         )}
+                        <div ref={messagesEndRef} />
                     </div>
+                    
                 </div>
+                
             </>
         )
 }

@@ -8,8 +8,8 @@ function Message({Sender,MessageFromSender}){
 
     return(
         <>
-            <div className="">
-                <p>{Sender}:{MessageFromSender}</p>
+            <div className="flex flex-wrap">
+                <p className="flex flex-wrap max-w-[30%]">{Sender}:{MessageFromSender}</p>
             </div>
         </>
     )
