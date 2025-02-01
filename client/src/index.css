@@ -1,3 +1,10 @@
 @import "tailwindcss";
 
 
+.scrollbar-hidden{
+
+    overflow-y: auto; /* Enable vertical scrolling */
+  
+    scrollbar-width: none; /* Hide the scrollbar */
+  
+  }

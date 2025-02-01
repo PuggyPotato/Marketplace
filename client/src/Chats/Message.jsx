@@ -8,7 +8,7 @@ function Message({Sender,MessageFromSender}){
 
     return(
         <>
-            <div>
+            <div className="">
                 <p>{Sender}:{MessageFromSender}</p>
             </div>
         </>

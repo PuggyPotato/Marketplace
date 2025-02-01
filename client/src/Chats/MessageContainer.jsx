@@ -159,7 +159,7 @@ function MessageContainer(){
                 <div className="absolute top-15 left-90">
                     <form onSubmit={sendMessage} className="">
                         
-                            <textarea value={message} className="absolute bottom-[-80px] border-2 h-15  w-275 p-3 pt-1 rounded-full overflow-hidden overflow-y-scroll" onChange={(e) =>setMessage(e.target.value)}/>
+                            <textarea value={message} className="absolute bottom-[-80px] border-2 h-15  w-275 p-3 pt-1 rounded-full overflow-hidden scrollbar-hidden" onChange={(e) =>setMessage(e.target.value)}/>
                             <button type="submit" className="absolute bottom-[-50px] right-10 rounded-full w-5 h-5 border-2" >t</button>
                         
                             
