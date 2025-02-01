@@ -216,7 +216,8 @@ function MessageContainer(){
                                     item.sender === sender ? "justify-end mr-2" : "justify-start"
                                 }`}>
 
-                                <div className={`p-3 py-2 rounded-2xl max-w-[300px] border-1  my-2 decoration-none
+                                <div className={`p-3 py-2 rounded-2xl max-w-[300px] border-1  my-2 decoration-none resize-none ${
+                                    item.sender === sender ? "bg-blue-400 text-white  " : "bg-yellow-600 text-black"
                     
                                 }`}>
                                 <Message Sender={item.sender} MessageFromSender={item.content} key={key}
