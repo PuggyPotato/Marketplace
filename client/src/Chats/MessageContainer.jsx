@@ -21,8 +21,13 @@ function MessageContainer(){
   const scrollToBottom = () => {
     const messageContainer = document.querySelector('.message-container'); // Add this class to your container
     if (messageContainer) {
-        messageContainer.scrollTop = messageContainer.scrollHeight;
+        messageContainer.scrollTo({
+            top:messageContainer.scrollHeight,
+            behavior:"smooth"
+        }) 
+        
     }
+    
 };
 
   // Auto scroll when messages change or component mounts
