@@ -198,7 +198,7 @@ function MessageContainer(){
                 <div className="absolute top-15 left-90">
                     <form onSubmit={sendMessage} className="">
                         
-                            <textarea value={message} className="absolute bottom-[-80px] border-2 h-15  w-275 p-3 pt-1 rounded-full overflow-hidden scrollbar-hidden" onChange={(e) =>setMessage(e.target.value)}/>
+                            <textarea value={message} className="absolute bottom-[-80px] border-2 h-15  w-275 p-3 pt-1 rounded-full overflow-hidden scrollbar-hidden resize-none" onChange={(e) =>setMessage(e.target.value)}/>
                             <button type="submit" className="absolute bottom-[-70px] right-5 rounded-full w-5 h-5 border-0 w-10 h-10" ><img src="/sendMessageIcon.png" className=""></img></button>
                         
                             
@@ -216,8 +216,7 @@ function MessageContainer(){
                                     item.sender === sender ? "justify-end mr-2" : "justify-start"
                                 }`}>
 
-                                <div className={`p-3 rounded-2xl max-w-[300px]  my-2 ${
-                                    item.sender === sender ? "bg-blue-400 text-white  " : "bg-yellow-600 text-black"
+                                <div className={`p-3 py-2 rounded-2xl max-w-[300px] border-1  my-2 decoration-none
                     
                                 }`}>
                                 <Message Sender={item.sender} MessageFromSender={item.content} key={key}
