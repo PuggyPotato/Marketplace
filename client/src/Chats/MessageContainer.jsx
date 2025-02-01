@@ -13,6 +13,7 @@ function MessageContainer(){
     const [message,setMessage] = useState("")
     const [prevMessage,setPrevMessage] = useState("")
     const [otherOnline,setOtherOnline] = useState("")
+    const [otherPerson,setOtherPerson] = useState("")
 
   // Create a ref for the message container
   const messagesEndRef = useRef(null);
@@ -29,6 +30,32 @@ function MessageContainer(){
     }
     
 };
+
+    useEffect(() =>{
+        setOtherPerson(urlParams.get("seller") || urlParams.get("buyer"))
+        console.log(otherPerson)
+        fetch(`http://localhost:3000/checkOtherOnline?otherPerson=${otherPerson}`,{
+            method:"GET",
+            credentials:"include"
+        })
+        .then(response =>{
+            if(!response.ok){
+                throw new Error("Network response was not ok")
+            }
+            return response.json();
+        })
+        .then(data =>{
+            if(data == ""){
+                setOtherOnline(false);
+            }
+            else if(data != ""){
+                setOtherOnline(true);
+            }
+            console.log("data is",data)
+            })
+            
+        .catch(error => console.log(error))
+    },[])
 
   // Auto scroll when messages change or component mounts
   useEffect(() => {
@@ -149,6 +176,7 @@ function MessageContainer(){
         
     },[buyer,seller])
 
+    
 
     function sendMessage(event){
         event.preventDefault();
@@ -170,12 +198,12 @@ function MessageContainer(){
                     <form onSubmit={sendMessage} className="">
                         
                             <textarea value={message} className="absolute bottom-[-80px] border-2 h-15  w-275 p-3 pt-1 rounded-full overflow-hidden scrollbar-hidden" onChange={(e) =>setMessage(e.target.value)}/>
-                            <button type="submit" className="absolute bottom-[-50px] right-10 rounded-full w-5 h-5 border-2" >t</button>
+                            <button type="submit" className="absolute bottom-[-70px] right-5 rounded-full w-5 h-5 border-0 w-10 h-10" ><img src="/sendMessageIcon.png" className=""></img></button>
                         
                             
                     </form>
                     <div className=" overflow-hidden overflow-y-scroll overflow-y-auto max-h-135 max-w-[1175px] w-[1175px] mt-2 message-container">
-                        {otherOnline ? (<h1>User Is Online</h1>) :(<h1>User Is Offline</h1>) }
+                        <div className="sticky bg-red-200 top-0 border-2 w-[120%] h-10 pt-[-30px] ">{otherOnline ? (<h1 className="">{otherPerson}Is Online</h1>) :(<h1 className="">{otherPerson} Is Offline</h1>) }</div>
                     
                         {!prevMessage.length > 0 ? (
                             <></>
