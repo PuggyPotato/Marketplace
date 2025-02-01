@@ -58,7 +58,7 @@ function MessageContainer(){
 
 
     useEffect(() =>{
-        
+        document.body.classList.add("overflow-hidden")
         if(sender){
             socket.current = io(PORT);
             console.log(PORT)
@@ -78,12 +78,14 @@ function MessageContainer(){
         }
 
         return() =>{
+            document.body.classList.remove("overflow-hidden")
             socket.current.disconnect("");
         }
     },[prevMessage])
 
     //Fetch previous message from db
     useEffect(() =>{
+        
         //Sending Seller As Query if User is Buyer
         if(seller != sender){
         fetch(`http://localhost:3000/prevMessage?seller=${seller}`, {
