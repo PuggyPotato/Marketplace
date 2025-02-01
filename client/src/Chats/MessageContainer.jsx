@@ -187,6 +187,7 @@ function MessageContainer(){
             socket.current.emit("messageDetails",({buyer,seller,message,sender}))
             setPrevMessage([...prevMessage,{buyer:buyer,seller:seller,content:message,sender:sender}])
             console.log(buyer,seller,message,sender)
+            setMessage("")
         }
     }
 
@@ -215,7 +216,7 @@ function MessageContainer(){
                                     item.sender === sender ? "justify-end mr-2" : "justify-start"
                                 }`}>
 
-                                <div className={`p-3 rounded-lg max-w-[300px]  my-2 ${
+                                <div className={`p-3 rounded-2xl max-w-[300px]  my-2 ${
                                     item.sender === sender ? "bg-blue-400 text-white  " : "bg-yellow-600 text-black"
                     
                                 }`}>
