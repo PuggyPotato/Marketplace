@@ -14,6 +14,8 @@ function Marketplace(){
     const productAPI = import.meta.env.VITE_products;
 
     useEffect(() =>{
+
+        document.body.classList.add("overflow-hidden")
         
         fetch(productAPI,{
             method:"GET",
