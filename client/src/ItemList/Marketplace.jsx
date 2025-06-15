@@ -9,7 +9,6 @@ import Home from "../Home"
 
 function Marketplace(){
     const [product,setProduct] = useState([])
-    const [userThatListedProduct,setUserThatListedProduct] = useState("")
     const [filterName,setFilterName] = useState("")
     const productAPI = import.meta.env.VITE_products;
 

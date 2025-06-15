@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 
 
 
 
-function Items({productName,productImage,productPrice,seller,productID,productDescription}){
+function Items({productName,productImage,productPrice,seller}){
     const navigate = useNavigate();
     const makeOfferAPI = import.meta.env.VITE_makeOfferAPI
     

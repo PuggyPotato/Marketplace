@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 
 
 
 
-function OwnListings({productName,productImage,productPrice,productDescription,productID,seller}){
+function OwnListings({productName,productImage,productPrice,productDescription,productID,}){
 
     const navigate = useNavigate();
 

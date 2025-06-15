@@ -8,7 +8,6 @@ import Home from "../Home"
 
 function CheckOwnListing(){
     const [product,setProduct] = useState([])
-    const [userThatListedProduct,setUserThatListedProduct] = useState("")
     const myProductsAPI = import.meta.env.VITE_myProducts;
 
     useEffect(() =>{
